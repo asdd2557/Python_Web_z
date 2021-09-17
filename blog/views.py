@@ -1,23 +1,13 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Post
 
 class PostList(ListView):
     model = Post
-   # template_name = 'blog/index.html'
-   ordering = '-pk'
+    #template_name = 'blog/index.html'
+    ordering = '-pk'
 
-def single_post_page(request, pk):
-    post = Post.objects.get(pk=pk)
-
-
-    return render(
-        request,
-        'blog/single_post_page.html',
-        {
-            'post': post,
-        }
-    )
+class PostDetail(DetailView):
+    model = Post
 
 
 # Create your views here.
