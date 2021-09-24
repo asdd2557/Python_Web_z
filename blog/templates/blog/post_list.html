@@ -106,23 +106,24 @@
       <div class="col-md-8 col-lg-9">
         <h1>Blog</h1>
 
-          {% for p in posts_list %}
-         {%endfor%}
+        {% for p in post_list %}
         <!-- Blog Post -->
         <div class="card mb-4">
           <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
 
         <!-- Blog Body임 -->
           <div class="card-body">
-            <h2 class="card-title">Post title</h2>
+            <h2 class="card-title">{{p.title}}</h2>
 
-             <p class="card-text">Blog 설명</p>
+             <p class="card-text">{{p.content}}</p>
               <a href="{{p.get_absolute_url}}" class="btn btn-primary">Read more &rarr;</a> <!-- Read More 버튼 -->
             </div>
-<div class="card-footer text-muted">
-  January 1, 2021
-</div>
-        </div>
+          <div class="card-footer text-muted">
+          Posted on {{p.created_at}} by
+            <a href="#">작성자명 쓸 위치(개발 예정)</a>
+          </div>
+           </div>
+        {% endfor %}
 
         <!-- Pagination-->
         <ul class="pagination justify-content-center mb-4">
@@ -188,7 +189,7 @@
   </footer>
 
 
-
+<!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
     crossorigin="anonymous"></script>
