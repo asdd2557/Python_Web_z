@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+
+  <title>{% block head_title %} Blog {% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}"media="screen">
+
+
+  <!-- 아이콘 사용시 필요한 Code임 -->
+  <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role = "doalog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role = "document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel"><i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden = "true">&times;</span>
+      </button>
+      </div>
+      <div class = "modal-body">
+        <div class = "row">
+          <div class = "col-md-6 d-grid gap-2">
+            <button type = "button" class = "btn btn-outline-dark  btn-sm"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</button>
+            <button type = "button" class = "btn btn-outline-dark  btn-sm"><i class="fas fa-at"></i>&nbsp&nbsp Log in with E-mail</button>
+            </div>
+            <div class = "col-md-6 d-grid gap-2">
+              <button type = "button" class = "btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp Sign Up with E-mail</button>
+              </div>
+              </div>
+              </div>
+        ...
+
+      </div>
+      <div class = "modal-footer">
+<button type = "button" class = "btn btn-secodary" data-dismiss = "modal">Close</button>
+      </div>
+      </div>
+      </div>
+      </div>
+</body>
+</html>
