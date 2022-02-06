@@ -3,19 +3,49 @@ from django.contrib.auth.models import User
 import os
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f' /blog/category/{self.slug}'
+
+    class Meta:
+        verbose_name_plural = 'Categories' #해당 목록글씨를 'Categories'로 바꿔준다.
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f' /blog/tag/{self.slug}'
+
+
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
-    hook_text = models.CharField(max_length=100, blank = True)
+    hook_text = models.CharField(max_length=100, blank=True)
     content = models.TextField()
 
-    head_image = models.ImageField(upload_to = 'blog/images/%Y/%m/%d/', blank = True)
-    file_upload = models.FileField(upload_to = 'blog/files/%Y/%m/%d/', blank = True)
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
+    file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)#blank 는 공백이라는 뜻이므로 blank = True는 공백을 허가하겠다는 뜻이다. null은 추후에 value가 삭제될시에 null로 변환을 허용한다는 뜻
+
+    tags = models.ManyToManyField(Tag, blank=True)
 
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return f'[{self.pk}]{self.title} :: {self.author}'
@@ -28,6 +58,7 @@ class Post(models.Model):
 
     def get_file_ext(self):
         return self.get_file_name().split('.')[-1]
+
 
 # Create your models here.
 
