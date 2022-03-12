@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+
+<html lang="ko">
 
 <head>
 
@@ -11,8 +12,6 @@
 
   <!-- 아이콘 사용시 필요한 Code임 -->
   <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
-
-
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class = "container">
@@ -43,17 +42,12 @@
               </ul>
             </li>
           </ul>
-
         </div>
-
-
       </div>
-
     </div>
     <ui class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link"href="#" data-bs-toggle = "modal" data-bs-target = "#loginModal">Log In</a>
-
       </li>
     </ui>
   </nav>
@@ -90,47 +84,20 @@
     </div>
   </div>
   </div>
+
 </head>
+
 <body>
 {% include 'blog/navbar.html' %}
+
+
 <div class="container my-4">
   <div class="row">
-    <div class="col-md-8 col-lg-9" id ="main-area">
+    <div class="col-12" id ="main-area">
       {% block main_area %}
       {% endblock %}
     </div>
-    <div class="col-md-4 col-lg-3">
-      <h3>Search</h3>
-      <!-- Search widget-->
-      <div class="card mb-4">
-        <div class="card-header">Search</div>
-        <div class="card-body">
-          <div class="input-group">
-            <input class="form-control" type="text" placeholder="Enter search term..."
-                   aria-label="Enter search term..." aria-describedby="button-search" />
-            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-          </div>
-        </div>
-      </div>
-      <!-- Categories widget-->
-      <div class="card my-4" id="categories-card">
-        <h5 class="card-header">Categories</h5>
-        <div class="card-body">
-           <div class="row no-gutters">
-            <ul >
-              {% for category in categories %}
-              <li>
-                <a href="{{ category.get_absolute_url }}"> {{ category }} ({{category.post_set.count}})</a>
-              </li>
-              {% endfor %}
-              <li>
-                <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count }})</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </div>
 
