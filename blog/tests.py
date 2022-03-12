@@ -10,6 +10,9 @@ class TestView(TestCase):
         self.user_admin2 = User.objects.create_user(username='admin2', password='woqkfrmq12')
         self.user_admin3 = User.objects.create_user(username='admin3', password='woqkfrmq12')
 
+        self.user_admin2.is_staff = True
+        self.user_admin2.save()
+
         self.category_programming = Category.objects.create(name='programming', slug='programming') #카테고리를 생성한다 이름은 programming
         self.category_music = Category.objects.create(name='music', slug='music')          #카테고리를 생성하다 이름은 music
 
@@ -76,8 +79,12 @@ class TestView(TestCase):
         response = self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
         
-        self.client.login(username = 'admin2', password = 'woqkfrmq12')
+        self.client.login(username = 'admin3', password = 'woqkfrmq12')
+        respone = self.client.get('/blog/create_post/')
+        self.assertNotEqual(respone.status_code, 200)
 
+
+        self.client.login(username = 'admin2', password = 'woqkfrmq12')
         response = self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, 'html.parser')
