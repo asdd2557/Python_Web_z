@@ -1,6 +1,9 @@
+from pickle import TRUE
+from urllib import response
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from bs4 import BeautifulSoup
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Tag
 
 
@@ -234,6 +237,8 @@ class TestView(TestCase):
         self.assertIn(self.category_programming.name, post_area.text)
 
 
+
+
         # 2.5 첫 번째 포스트의 작성자(author)가 포스트 영역에 있다(아직 구현할 수 없음)
 
         '''    # 2.6 첫 번째 포스트의 내용(content)이 포스트 영역에 있다.
@@ -253,4 +258,51 @@ class TestView(TestCase):
 
 '''
 
+
+
+
 # Create your tests here.
+    def test_update_post(self):
+        update_post_url = f'/blog/update_post/{self.post_003.pk}/'
+        print(self.post_003.pk)
+        #로그인 하지 않은경우
+        response = self.client.get(update_post_url)
+        self.assertNotEqual(response.status_code, 200)
+
+        #로그인은 했지만 작성자가 아닌 경우
+        self.assertNotEqual(self.post_003.author, self.user_admin2)
+        self.client.login(
+            username=self.user_admin2.username,
+            password='woqkfrmq12'
+        )
+        response = self.client.get(update_post_url)
+        self.assertEqual(response.status_code, 403)
+
+        #작성자(admin2)가 접근하는 경우
+        self.client.login(
+            username=self.post_003.author.username,
+            password='woqkfrmq12'
+        )
+        response = self.client.get(update_post_url)
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        self.assertEqual('Edit Post - Blog', soup.title.text)
+        main_area = soup.find('div', id = 'main-area')
+        self.assertIn('Edit Post', main_area.text)
+
+        response = self.client.post(
+            update_post_url,
+            {
+                'title': '세 번째 포스트를 수정했습니다.',
+                'content': '안녕 세계? 우리는 하나!',
+                'category': self.category_music.pk
+            },
+            follow=TRUE
+        )
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        main_area = soup.find('div', id = 'main-area')
+        self.assertIn('세 번째 포스트를 수정했습니다.', main_area.text)
+        self.assertIn('안녕 세계? 우리는 하나!', main_area.text)
+        self.assertIn(self.category_music.name, main_area.text)

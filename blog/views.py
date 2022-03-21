@@ -1,11 +1,13 @@
 from email import message
 from django.shortcuts import redirect, render
 
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView ,UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Post, Category, Tag
+
+from django.core.exceptions import PermissionDenied
 
 class PostList( ListView):
     model = Post
@@ -87,3 +89,15 @@ class PostDetail(DetailView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 # Create your views here.
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title','hook_text','content','head_image','file_upload','category','tags']
+
+    template_name = 'blog/post_update_form.html' 
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
