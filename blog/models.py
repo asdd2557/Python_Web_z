@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
@@ -29,11 +28,11 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=30) 
     hook_text = models.CharField(max_length=100, blank=True)
     content = models.TextField()
 
-    head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
+    head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True) #미디어 파일 안에 블로그 안에 이미지 안에 년도 월 로 만듬
     file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

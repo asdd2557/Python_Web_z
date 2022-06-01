@@ -1,4 +1,5 @@
 from email import message
+from urllib import request
 from django.shortcuts import redirect, render
 
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
@@ -8,6 +9,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Tag
 
 from django.core.exceptions import PermissionDenied
+
+
+def test1(request):
+     return render(request,'blog/Test.html' ) 
+
 
 class PostList( ListView):
     model = Post
@@ -23,7 +29,7 @@ class PostList( ListView):
 
 class PostCreate(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff

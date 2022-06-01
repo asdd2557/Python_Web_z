@@ -58,6 +58,7 @@
                          <br/>
                     {% endif %}
                 </section>
+        
                 <!-- Post Download Button -->
                 {% if post.file_upload %}
                 <a href="{{ post.file_upload.url }}" class ="btn btn-outline-dark" role="button">
@@ -74,7 +75,8 @@
                     <i class="far fa-file"></i>
                     {%endif%}
                     {{ post.get_file_name }}
-                </a>
+                </a><br><br>
+                
                 {%endif%}
             </div>
 

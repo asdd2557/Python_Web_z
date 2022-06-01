@@ -78,37 +78,37 @@ class TestView(TestCase):
             self.assertNotIn(self.post_002.title, main_area.text)
             self.assertNotIn(self.post_003.title, main_area.text)
 
-    def test_create_post(self):
-        response = self.client.get('/blog/create_post/')
-        self.assertNotEqual(response.status_code, 200)
-        
-        self.client.login(username = 'admin3', password = 'woqkfrmq12')
-        respone = self.client.get('/blog/create_post/')
-        self.assertNotEqual(respone.status_code, 200)
+        def test_create_post(self):
+            response = self.client.get('/blog/create_post/')
+            self.assertNotEqual(response.status_code, 200)
+            
+            self.client.login(username = 'admin3', password = 'woqkfrmq12')
+            respone = self.client.get('/blog/create_post/')
+            self.assertNotEqual(respone.status_code, 200)
 
 
-        self.client.login(username = 'admin2', password = 'woqkfrmq12')
-        response = self.client.get('/blog/create_post/')
-        self.assertEqual(response.status_code, 200)
-        soup = BeautifulSoup(response.content, 'html.parser')
+            self.client.login(username = 'admin2', password = 'woqkfrmq12')
+            response = self.client.get('/blog/create_post/')
+            self.assertEqual(response.status_code, 200)
+            soup = BeautifulSoup(response.content, 'html.parser')
 
-        self.assertEqual('Create Post - Blog', soup.title.text)
-        main_area = soup.find('div', id='main-area')
-        self.assertIn('Create New Post', main_area.text)
+            self.assertEqual('Create Post - Blog', soup.title.text)
+            main_area = soup.find('div', id='main-area')
+            self.assertIn('Create New Post', main_area.text)
 
-        self.client.post(
-            '/blog/create_post/',
-            {
-                'title':'Post Form 만들기',
-                'content' : "Post Form 페이지를 만듭니다.",
-            }
-        )
+            self.client.post(
+                '/blog/create_post/',
+                {
+                    'title':'Post Form 만들기',
+                    'content' : "Post Form 페이지를 만듭니다.",
+                }
+            )
 
-        last_post = Post.objects.last()
+            last_post = Post.objects.last()
 
 
-        self.assertEqual(last_post.title, "Post Form 만들기")
-        self.assertEqual(last_post.author.username, 'admin2')
+            self.assertEqual(last_post.title, "Post Form 만들기")
+            self.assertEqual(last_post.author.username, 'admin2')
 
 
 
@@ -126,8 +126,8 @@ class TestView(TestCase):
         self.assertIn('Blog', navbar.text)
         self.assertIn('About Me', navbar.text)
 
-        logo_btn = navbar.find('a', text='자기소개 웹 만들기 실습')
-        self.assertEqual(logo_btn.attrs['href'], '#')
+        logo_btn = navbar.find('a', text='토이 프로젝트')
+        self.assertEqual(logo_btn.attrs['href'], '/')
 
         home_btn = navbar.find('a', text='Home')
         self.assertEqual(home_btn.attrs['href'], '/')
