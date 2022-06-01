@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
+import os # 미디어 파일을 쓰겠다.
 
 from pathlib import Path
 
@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
-    'single_pages',
     'django_extensions',
+    
+    'blog',
+    #'single_pages',
+    'single_page',
 ]
 
 MIDDLEWARE = [
@@ -122,10 +124,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' #URL이 static으로 오는경우에 미디어 파일로 접근하는 로직
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+MEDIA_URL = '/media/' #URL이 media로 오는경우에 미디어파일에 접근하는것이다.
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #파일이 저장되는곳을 지정해주는로직
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

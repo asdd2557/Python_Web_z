@@ -90,7 +90,7 @@ class TestView(TestCase):
             self.client.login(username = 'admin2', password = 'woqkfrmq12')
             response = self.client.get('/blog/create_post/')
             self.assertEqual(response.status_code, 200)
-            soup = BeautifulSoup(response.content, 'html.parser')
+            soup = BeautifulSoup(response.content, 'html.parser') 
 
             self.assertEqual('Create Post - Blog', soup.title.text)
             main_area = soup.find('div', id='main-area')
