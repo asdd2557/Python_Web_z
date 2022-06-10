@@ -10,25 +10,25 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f' /blog/category/{self.slug}'
+        return f'/blog/category/{self.slug}/'
 
     class Meta:
         verbose_name_plural = 'Categories' #해당 목록글씨를 'Categories'로 바꿔준다.
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return f' /blog/tag/{self.slug}'
+        return f'/blog/tag/{self.slug}/'
 
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=30) 
+    title = models.CharField(max_length=30)
     hook_text = models.CharField(max_length=100, blank=True)
     content = models.TextField()
 

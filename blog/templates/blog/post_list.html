@@ -26,6 +26,7 @@
     {%endif%}
 
     <!-- Blog Body임 -->
+    <!-- Blog List임 -->
     <div class="card-body">
         {% if p.category %}
         <span class="badge badge-secondary float-right">{{ p.category }}</span>
@@ -43,7 +44,12 @@
         {%if p.tags.exists %}
           <i class="fas fa-tags"></i>
           {% for tag in p.tags.iterator %}
-               <a href = "{{ tag.get_absolute_url }}"><span class = "badge badge-pill badge-info">{{ tag }}</span></a>
+             <!-- <a href = "{{ tag.get_absolute_url }}"><span class = "badge badge-pill badge-info">{{ tag }}</span></a>-->
+       
+
+              <a href = "{{ tag.get_absolute_url }}"> <span class="badge badge-dark">{{ tag }}</span></a>
+
+ 
               {% endfor %}
               <br/>
               <br/>

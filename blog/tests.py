@@ -29,6 +29,9 @@ class TestView(TestCase):
             category=self.category_programming, #programming 카테고리 지정
             author=self.user_admin2
         )
+        self.post_001.tags.add(self.tag_hello)
+        self.post_001.tags.add(self.tag_python_kor)
+   
         
         self.post_002 = Post.objects.create(
             title='두 번째 포스트 입니다.',
@@ -36,15 +39,18 @@ class TestView(TestCase):
             category=self.category_music,  #music 카테고리 지정
             author=self.user_admin3
         )
+
+        self.post_002.tags.add(self.tag_python_kor)
         self.post_003 = Post.objects.create(
             title='세 번째 포스트 입니다.',
             content='category가 없을 수도 있죠',
             author=self.user_admin3
         )
-        self.post_001.tags.add(self.tag_hello)
-        self.post_002.tags.add(self.tag_python_kor)
+   
+   
+   
         self.post_003.tags.add(self.tag_python)
-
+    
         def test_tag_page(self):
             response = self.client.get(self.tag_hello.get_absolute_url())
             self.assertEqual(response.status_code, 200)
@@ -159,8 +165,9 @@ class TestView(TestCase):
         self.assertIn(self.post_001.category.name, post_001_card.text)
         self.assertIn(self.post_001.author.username.upper(), post_001_card.text)
         self.assertIn(self.tag_hello.name, post_001_card.text)
+        self.assertIn(self.tag_python_kor.name, post_001_card.text)
         self.assertNotIn(self.tag_python.name, post_001_card.text)
-        self.assertNotIn(self.tag_python_kor.name, post_001_card.text)
+      
 
         post_002_card = main_area.find('div', id='post-2')
         self.assertIn(self.post_002.title, post_002_card.text)
@@ -221,20 +228,14 @@ class TestView(TestCase):
 
         main_area = soup.find('div', id = 'main-area')
         post_area = main_area.find('div', id = 'post-area')
-
-
-
-
-        self.assertIn(self.post_001.title, post_area.text)
-        self.assertIn(self.post_001.content, post_area.text)
-
         self.assertIn(self.tag_hello.name, post_area.text)
-        
+        self.assertIn(self.tag_python_kor.name, post_area.text)
         self.assertNotIn(self.tag_python.name, post_area.text)
-        self.assertNotIn(self.tag_python_kor.name, post_area.text)
+             
 
 
-        self.assertIn(self.category_programming.name, post_area.text)
+
+
 
 
 
