@@ -1,7 +1,7 @@
 from email import message
-from urllib import request
+from urllib import request, response
 from django.shortcuts import redirect, render
-
+from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -9,8 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Tag
 
 from django.core.exceptions import PermissionDenied
-
-
+import tkinter
+import tkinter.messagebox
 def test1(request):
      return render(request,'blog/Test.html' ) 
 
@@ -29,16 +29,31 @@ class PostList( ListView):
 
 class PostCreate(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
 
-    def test_func(self):
+    def test_func(self): ##UserPassesTestMixin를 거쳐서 통과될시에 나오는 메소드
         return self.request.user.is_superuser or self.request.user.is_staff
 
     def form_valid(self, form):
         current_user = self.request.user
-        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
+        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):##로그인을 했고 로그인한 유저가 스테프유저인가 아님 슈퍼유전가
             form.instance.author = current_user
-            return super(PostCreate,self).form_valid(form)
+            response = super(PostCreate, self).form_valid(form)
+            tags_str = self.request.POST.get('tags_str')
+            if tags_str:
+    
+                tags_str = tags_str.strip()##문자열 앞뒤에 빈공간이 있으면 없에준다.
+                tags_str = tags_str.replace(',', ';')## ,는 ;로 교체한다.
+                tags_list = tags_str.split(';') ## ;를 기준으로 리스트 를 생성하라                 
+                for t in tags_list:
+                    t = t.strip()## 앞뒤 빈공간 없에준다.
+                    tag, is_tag_createed = Tag.objects.get_or_create(name=t) ##만약에 get을 하며 Tag중 T가있으면 가져오고 없으면 만들어서 가져와라라는 뜻임 이름이 T가있으면 tag함수에담고 두번째에 False를 반환함
+                    if is_tag_createed:
+                        tag.slug = slugify(t, allow_unicode=True)
+                        tag.save()
+                    self.object.tags.add(tag) ##새로 만든 게시물의 테그를 가져와 추가시킨다.
+
+            return response
         else:
             return redirect('/blog/')
 
@@ -96,14 +111,14 @@ class PostDetail(DetailView):
         return context
 # Create your views here.
 
-class PostUpdate(LoginRequiredMixin, UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView): ##Updateview는 수정하려는 게시물의 레코드를 DB에서 불러와 아래 self.get_object()함수로 불러온다.
     model = Post
     fields = ['title','hook_text','content','head_image','file_upload','category','tags']
 
     template_name = 'blog/post_update_form.html' 
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs): ## 유저가 해당포스터를 수정할 권리가 있는지 검사 디스패치는 Get방식인지 Post방식인지 구분해주는 역활을 한다.
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionDenied
+            raise PermissionDenied ##장고에서 지원하는 기능으로 웹코드 200이 안뜨도록 하는 기능임

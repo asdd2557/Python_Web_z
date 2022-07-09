@@ -2,15 +2,15 @@
 
 {% block main_area %}
 
-    {% if user.is_authenticated %}
-        {% if user.is_superuser or user.is_staff %}
-            <a class = "btn btn-info btn-sm float-right" href="/blog/create_post/"role="button"><i class = "fas fa-pen"></i>&nbsp;New Post</a>
+    {% if user.is_authenticated %} <!-- 만약 로그인이 되여있을경우에만 보임-->
+        {% if user.is_superuser or user.is_staff %} <!-- 만약 유저가 슈퍼유저인가 혹인 스테프인가?-->
+            <a class = "btn btn-info btn-sm float-right" href="/blog/create_post/"role="button"><i class = "fas fa-pen"></i>&nbsp;New Post</a><!--&nbsp버튼을 y축으로 띄운다-->
             {% endif %}
     {% endif %}
 
     <h1>Blog
-        {% if category %} <span class="badge badge-secondary">{{ category }}</span> {% endif %}
-        {% if tag %}<span class="badge badge-secondary"><i class="fas fa-tags"></i>({{ tag.post_set.count }})</span>{% endif %}
+        {% if category %} <span class="badge badge-secondary">{{ category }}</span> {% endif %}<!-- 받아준다 -->
+        {% if tag %}<span class="badge badge-secondary"><i class="fas fa-tags"></i>{{ tag}}({{ tag.post_set.count }})</span>{% endif %}
     </h1>
 
 

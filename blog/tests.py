@@ -1,4 +1,7 @@
+from email import message
+from itertools import count
 from pickle import TRUE
+from tkinter import messagebox
 from urllib import response
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
@@ -13,7 +16,7 @@ class TestView(TestCase):
         self.user_admin2 = User.objects.create_user(username='admin2', password='woqkfrmq12')
         self.user_admin3 = User.objects.create_user(username='admin3', password='woqkfrmq12')
 
-        self.user_admin2.is_staff = True
+        self.user_admin2.is_staff = True ##슈퍼 유저 적용
         self.user_admin2.save()
 
         self.category_programming = Category.objects.create(name='programming', slug='programming') #카테고리를 생성한다 이름은 programming
@@ -51,7 +54,7 @@ class TestView(TestCase):
    
         self.post_003.tags.add(self.tag_python)
     
-        def test_tag_page(self):
+    def test_tag_page(self):
             response = self.client.get(self.tag_hello.get_absolute_url())
             self.assertEqual(response.status_code, 200)
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -59,16 +62,18 @@ class TestView(TestCase):
             self.navbar_test(soup)
             self.category_card_test(soup)
 
-            self.asserIn(self.tag_hello.name, soup.h1.text)
-
-            main_area = soup.find('div, id = main-area')
-            self.asserIn(self.tag_hello.name, main_area.text)
-
-            self.asserNotIn(self.post_001.title, main_area.text)
-            self.asserNotIn(self.post_002.title, main_area.text)
+            self.assertIn(self.tag_hello.name, soup.h1.text)
+            
+            main_area = soup.find('div', id = 'main-area')
+           
+           
+            self.assertIn(self.tag_hello.name , main_area.text)
+            
+            self.assertIn(self.post_001.title, main_area.text)
+            self.assertNotIn(self.post_002.title, main_area.text)
             self.assertNotIn(self.post_003.title, main_area.text)
 
-        def test_category_page(self):
+    def test_category_page(self):
             response = self.client.get(self.category_programming.get_absolute_url())
             self.assertEqual(response.status_code, 200)
 
@@ -84,7 +89,7 @@ class TestView(TestCase):
             self.assertNotIn(self.post_002.title, main_area.text)
             self.assertNotIn(self.post_003.title, main_area.text)
 
-        def test_create_post(self):
+    def test_create_post(self):
             response = self.client.get('/blog/create_post/')
             self.assertNotEqual(response.status_code, 200)
             
@@ -102,11 +107,16 @@ class TestView(TestCase):
             main_area = soup.find('div', id='main-area')
             self.assertIn('Create New Post', main_area.text)
 
+            tag_str_input = main_area.find('input', id='id_tags_str')
+            
+            self.assertTrue(tag_str_input)##해당값이 있냐 확인하는 로직
+
             self.client.post(
                 '/blog/create_post/',
                 {
                     'title':'Post Form 만들기',
                     'content' : "Post Form 페이지를 만듭니다.",
+                    'tags_str': 'new tag; 한글 태그, python'
                 }
             )
 
@@ -115,18 +125,21 @@ class TestView(TestCase):
 
             self.assertEqual(last_post.title, "Post Form 만들기")
             self.assertEqual(last_post.author.username, 'admin2')
-
-
-
+            self.assertEqual(last_post.content, 'Post Form 페이지를 만듭니다.')
+            self.assertEqual(last_post.tags.count(), 3)
+            self.assertTrue(Tag.objects.get(name='new tag'))
+            self.assertTrue(Tag.objects.get(name='한글 태그'))
+            self.assertTrue(Tag.objects.get(name='python'))
+            self.assertEqual(Tag.objects.count(), 5)
 
 
     def category_card_test(self, soup):
-        categories_card = soup.find('div', id='categories-card')
-        self.assertIn('Categories', categories_card.text)
-        self.assertIn(f'{self.category_programming.name} ({self.category_programming.post_set.count()})', categories_card.text)
-        self.assertIn(f'{self.category_music.name} ({self.category_music.post_set.count()})', categories_card.text)
-        self.assertIn(f'미분류', categories_card.text)
-
+            categories_card = soup.find('div', id='categories-card')
+            self.assertIn('Categories', categories_card.text)
+            self.assertIn(f'{self.category_programming.name} ({self.category_programming.post_set.count()})', categories_card.text)
+            self.assertIn(f'{self.category_music.name} ({self.category_music.post_set.count()})', categories_card.text)
+            self.assertIn(f'미분류', categories_card.text)
+  
     def navbar_test(self, soup):
         navbar = soup.nav
         self.assertIn('Blog', navbar.text)
@@ -264,8 +277,7 @@ class TestView(TestCase):
 
 # Create your tests here.
     def test_update_post(self):
-        update_post_url = f'/blog/update_post/{self.post_003.pk}/'
-        print(self.post_003.pk)
+        update_post_url = f'/blog/update_post/{self.post_003.pk}/' 
         #로그인 하지 않은경우
         response = self.client.get(update_post_url)
         self.assertNotEqual(response.status_code, 200)
