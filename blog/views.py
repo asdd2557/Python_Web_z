@@ -1,4 +1,5 @@
 from email import message
+from inspect import TPFLAGS_IS_ABSTRACT
 from urllib import request, response
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
@@ -113,9 +114,43 @@ class PostDetail(DetailView):
 
 class PostUpdate(LoginRequiredMixin, UpdateView): ##Updateview는 수정하려는 게시물의 레코드를 DB에서 불러와 아래 self.get_object()함수로 불러온다.
     model = Post
-    fields = ['title','hook_text','content','head_image','file_upload','category','tags']
+    fields = ['title','hook_text','content','head_image','file_upload','category']
 
     template_name = 'blog/post_update_form.html' 
+
+    def get_context_data(self, **kwargs): 
+        context = super(PostUpdate, self).get_context_data()
+     
+        if self.object.tags.exists():
+            tags_str_list = list()
+            for t in self.object.tags.all():
+                tags_str_list.append(t.name)
+            context['tags_str_default'] = ';'.join(tags_str_list)
+
+        return context
+        
+    def form_valid(self, form):
+        response = super(PostUpdate, self).form_valid(form)
+      
+        self.object.tags.clear()
+
+        tags_str = self.request.POST.get('tags_str')
+        if tags_str:
+            tags_str = tags_str.strip()##문자열 앞뒤에 빈공간이 있으면 없에준다.
+            tags_str = tags_str.replace(',', ';')## ,는 ;로 교체한다.
+            tags_list = tags_str.split(';') ## ;를 기준으로 리스트 를 생성하라                 
+            for t in tags_list:
+                t = t.strip()## 앞뒤 빈공간 없에준다.
+                tag, is_tag_createed = Tag.objects.get_or_create(name=t) ##만약에 get을 하며 Tag중 T가있으면 가져오고 없으면 만들어서 가져와라라는 뜻임 이름이 T가있으면 tag함수에담고 두번째에 False를 반환함
+                if is_tag_createed:
+                    tag.slug = slugify(t, allow_unicode=True)
+                    tag.save()
+                self.object.tags.add(tag) ##새로 만든 게시물의 테그를 가져와 추가시킨다.
+
+        return response
+
+    
+            
 
     def dispatch(self, request, *args, **kwargs): ## 유저가 해당포스터를 수정할 권리가 있는지 검사 디스패치는 Get방식인지 Post방식인지 구분해주는 역활을 한다.
         if request.user.is_authenticated and request.user == self.get_object().author:
