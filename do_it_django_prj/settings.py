@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from asyncio.constants import ACCEPT_RETRY_DELAY
 import os # 미디어 파일을 쓰겠다.
 
 from pathlib import Path
+from telnetlib import LOGOUT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,10 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'django_extensions',
-    
-    'crispy_forms',
+
+
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    'crispy_forms', ## 폼 이쁘게 꾸미기
     'markdownx',
     'blog',
     #'single_pages',
@@ -136,4 +146,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #파일이 저장되는곳을 지�
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4' ## 폼 이쁘게 꾸미기
+
+AUTHENTICATION_BACKENDS = [
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True ## 이메일 관리를 할것이냐
+ACCOUNT_EMAIL_VERIFCATION= 'none' ## 회원가입을하면 그 이메일을 보내서 회원가입 할것이냐 물어보는것
+
+LOGIN_REDIRECT_URL = '/' ## 로그아웃하였을경우 블로그홈페이지로 감
+LOGOUT_REDIRECT_URL = '/blog/' ## 로그아웃하였을경우 블로그홈페이지로 감

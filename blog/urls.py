@@ -3,11 +3,12 @@ from django.urls import path
 from blog import views
 
 urlpatterns = [
-   path('update_post/<int:pk>/', views.PostUpdate.as_view()),
-   path('create_post/',views.PostCreate.as_view()),
-   path('tag/<str:slug>/',views.tag_page),
-   path('category/<str:slug>/', views.category_page),
-   path('<int:pk>/',views.PostDetail.as_view()),
-   path('',views.PostList.as_view()),
-  
+   path('blog/update_post/<int:pk>/', views.PostUpdate.as_view()),
+   path('blog/create_post/',views.PostCreate.as_view()),
+   path('blog/tag/<str:slug>/',views.tag_page),
+   path('blog/category/<str:slug>/', views.category_page),
+   path('blog/<int:pk>/',views.PostDetail.as_view()),
+   path('blog/',views.PostList.as_view()),
+   path('',views.landing),
+   path('about_me/',views.about_me),
 ]

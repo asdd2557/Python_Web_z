@@ -24,10 +24,12 @@ from django.conf.urls.static import static # 스타틱 임폴트??
 
 urlpatterns = [
     path('markdownx/', include('markdownx.urls')),
-    path('blog/', include('blog.urls')),
-    path('admin/', admin.site.urls),
-   #path('1', include('single.urls')),
 
+    
+    path('admin/', admin.site.urls),
+  path('', include('blog.urls')),
+   path('accounts/', include('allauth.urls')),
+ 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

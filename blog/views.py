@@ -157,3 +157,17 @@ class PostUpdate(LoginRequiredMixin, UpdateView): ##Updateview는 수정하려�
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied ##장고에서 지원하는 기능으로 웹코드 200이 안뜨도록 하는 기능임
+
+
+def landing(request):
+     return render(
+        request,
+        'blog/landing.html'
+     )
+
+def about_me(request):
+     return render(
+        request,
+        'blog/about_me.html'
+        )
+# Create your views here.
