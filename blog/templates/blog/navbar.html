@@ -78,20 +78,16 @@
       </div>
       <div class = "modal-body">
         <div class = "row">
-          <div class = "col-md-6 d-grid gap-2">
+          <div class = "col-md-6 d-grid gap-2 col-sm-12" >
             <a role="button" href="{% provider_login_url 'google'%}" type = "button" class = "btn btn-outline-dark  btn-sm"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
 
-            <button type = "button" class = "btn btn-outline-dark  btn-sm"><i class="fas fa-at"></i>&nbsp&nbsp Log in with E-mail</button>
+            <a role="button" href="/accounts/login/" type = "button"  class = "btn btn-outline-dark  btn-sm"><i class="fas fa-at"></i>&nbsp&nbsp Log in with E-mail</a>
             </div>
-            <div class = "col-md-6 d-grid gap-2">
-              <button type = "button" class = "btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp Sign Up with E-mail</button>
-              </div>
-              
+            <div class = "col-md-6 col-sm-12">
+              <a role="button" href="/accounts/signup/" type = "button" class = "btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp Sign Up with E-mail</a>
               </div>
               </div>
-   
-
-      </div>
+              </div>
       <div class = "modal-footer">
 <button type = "button" class = "btn btn-secodary" data-dismiss = "modal">Close</button>
       </div>
