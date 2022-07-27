@@ -89,28 +89,52 @@
                 
                 {%endif%}
             </div>
-
+            <!-- Comments Input -->
             <div id = "comment-area">
-                <!-- Comments section-->
-                <section class="mb-5">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <!-- Comment form-->
-                            <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                <div class ="card my-4">
+                    <h5 class="card-header">
+                        Leave a Comment:
+                    </h5>
+                    <div class = "card-body">
+                        <form>
+                            <div class ="form-group">
+                                <textarea class="form-control" rows="3"></textarea>
 
-                            <!-- Single comment-->
+                            </div>
+                            <button type = "submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+          
+
+
+         
+            {% if post.comment_set.exists %} <!-- 댓글이 존재하는경우에 -->
+            <div class="card bg-light">
+                {% for comment in post.comment_set.iterator %}
+              <!-- Single comment-->
+                <div class="media mb-4" id = "comment-{{comment.pk}}">
+            
+                        <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                 <div class="ms-3">
-                                    <div class="fw-bold">Commenter Name</div>
-                                    When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                                    <h5 class="mt-0">{{ comment.author.username }} &nbsp;&nbsp;<!-- &nbsp; 는 살짝 떨어트려 놓는 기능-->  <small class = "text-muted">{{comment.created_at}}</small></h5>
+                                    {{ comment.content | linebreaks }}<!-- linebreaks 는 댓글에 줄바꿈을 인식하여 글을 줄바꿈으로 바꿔줌 -->
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </section>
+              
+         
+                {% endfor %}
             </div>
+                {% endif %}
+                
+            </div>
+           
         </div>
     </div>
 </div>
