@@ -1,13 +1,16 @@
 from email import message
+from email.errors import StartBoundaryNotFoundDefect
 from inspect import TPFLAGS_IS_ABSTRACT
 from urllib import request, response
-from django.shortcuts import redirect, render
+from xml.etree.ElementTree import Comment
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Post, Category, Tag
+from .forms import CommentForm
 
 from django.core.exceptions import PermissionDenied
 import tkinter
@@ -109,6 +112,7 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['comment_form']= CommentForm
         return context
 # Create your views here.
 
@@ -171,3 +175,18 @@ def about_me(request):
         'blog/about_me.html'
         )
 # Create your views here.
+def new_comment(request, pk):
+    if request.user.is_authenticated: ##로그인했을경우
+        post = get_object_or_404(Post, pk=pk) ## 포스트 키를 존재하지 않는 키로 요청할 경우 에러를 띄운다.
+
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save()
+                return redirect(comment.get_absolute_url())
+        return redirect(post.get_absolute_url())
+    else: 
+        raise PermissionError  ## 로그인도 안됐는데 포스트형식으로 정보를 계속 보내면 에러매세지를 띄운다

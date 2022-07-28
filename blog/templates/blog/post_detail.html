@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block head_title %}
-
+{% load crispy_forms_tags %} <!--크리스피 사용하게 해주는 export기능-->
 {{ post.title }} - Blog
 
 {% endblock %}
@@ -96,13 +96,19 @@
                         Leave a Comment:
                     </h5>
                     <div class = "card-body">
-                        <form>
+                        {% if user.is_authenticated %} <!-- 로그인 하였을경우 -->
+                        <form id = "comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
+                            {% csrf_token %}
                             <div class ="form-group">
-                                <textarea class="form-control" rows="3"></textarea>
+                               {{ comment_form | crispy}}
 
                             </div>
                             <button type = "submit" class="btn btn-primary">Submit</button>
                         </form>
+
+                        {% else %}
+                        <a role="button" type="button" class = "btn btn-outline-dark btn-block btn-sm" href="#" data-bs-toggle = "modal" data-bs-target = "#loginModal">Log in and leave a comment</a>
+                        {% endif %}
                     </div>
                 </div>
 

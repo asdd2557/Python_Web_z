@@ -11,4 +11,5 @@ urlpatterns = [
    path('blog/',views.PostList.as_view()),
    path('',views.landing),
    path('about_me/',views.about_me),
+   path('blog/<int:pk>/new_comment/', views.new_comment),
 ]
