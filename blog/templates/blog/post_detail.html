@@ -126,8 +126,15 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                 <div class="ms-3">
-                                    <h5 class="mt-0">{{ comment.author.username }} &nbsp;&nbsp;<!-- &nbsp; 는 살짝 떨어트려 놓는 기능-->  <small class = "text-muted">{{comment.created_at}}</small></h5>
+                                    {% if user.is_authenticated and comment.author == user%}
+                                   <a class="btn btn-sm btn-info float-right" role = "button" id="comment-{{comment.pk}}-update-btn" href="/blog/update_comment/{{comment.pk}}/">edit</a>
+                                   {% endif %} 
+                                   <h5 class="mt-0">{{ comment.author.username }} &nbsp;&nbsp;<!-- &nbsp; 는 살짝 떨어트려 놓는 기능-->  <small class = "text-muted">{{comment.created_at}}</small></h5>
                                     {{ comment.content | linebreaks }}<!-- linebreaks 는 댓글에 줄바꿈을 인식하여 글을 줄바꿈으로 바꿔줌 -->
+                                    {% if comment.is_updated %}
+                                    <p class = "float-right text-muted"> Updated: {{ comment.updated_at }}</p>
+                                    {% endif %}
+                               
                                 </div>
                             </div>
                         </div>

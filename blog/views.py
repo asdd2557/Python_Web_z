@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView ,UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 from .forms import CommentForm
 
 from django.core.exceptions import PermissionDenied
@@ -160,7 +160,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView): ##Updateview는 수정하려�
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionDenied ##장고에서 지원하는 기능으로 웹코드 200이 안뜨도록 하는 기능임
+            raise PermissionDenied ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
 
 
 def landing(request):
@@ -190,3 +190,15 @@ def new_comment(request, pk):
         return redirect(post.get_absolute_url())
     else: 
         raise PermissionError  ## 로그인도 안됐는데 포스트형식으로 정보를 계속 보내면 에러매세지를 띄운다
+
+
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+ 
+    def dispatch(self, request, *args, **kwargs): ## 유저가 해당포스터를 수정할 권리가 있는지 검사 디스패치는 Get방식인지 Post방식인지 구분해주는 역활을 한다.
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
+

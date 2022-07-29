@@ -4,6 +4,7 @@ import os
 from markdown import markdown
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
+from datetime import timedelta
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -79,3 +80,5 @@ class Comment(models.Model):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'  ##  #comment하면 해당하는 comment화면을 찾아감 
         # Create your models here.
 
+    def is_updated(self):
+        return self.updated_at - self.created_at > timedelta(seconds = 1)
