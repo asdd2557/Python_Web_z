@@ -3,10 +3,11 @@ from email.errors import StartBoundaryNotFoundDefect
 from inspect import TPFLAGS_IS_ABSTRACT
 from urllib import request, response
 from xml.etree.ElementTree import Comment
+from zlib import adler32
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
-
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Post, Category, Tag, Comment
@@ -201,4 +202,15 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
             return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
+
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post = comment.post
+
+    if request.user.is_authenticated and request.user == comment.author:
+        comment.delete()
+        return redirect(post.get_absolute_url())
+    else:
+        raise PermissionDenied #해커가 url로 delete_comment.pk를 이용하여 삭제할 수도 있기 때문에 방지하기 위하여 로그인한 사용자의 권한을 확인함
 

@@ -3,6 +3,7 @@ from django.urls import path
 from blog import views
 
 urlpatterns = [
+   path('blog/delete_comment/<int:pk>/',views.delete_comment),
    path('blog/update_comment/<int:pk>/',views.CommentUpdate.as_view()),
    path('blog/update_post/<int:pk>/', views.PostUpdate.as_view()),
    path('blog/create_post/',views.PostCreate.as_view()),
