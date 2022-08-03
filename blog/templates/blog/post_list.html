@@ -72,17 +72,31 @@
 {% else %}
 <h3>아직 게시물이 없습니다.</h3>
 {% endif %}
+
+{% if is_paginated %} <!-- Post가 5개를 넘으면. -->
 <!-- Pagination-->
 <ul class="pagination justify-content-center mb-4">
+    {% if page_obj.has_next %} <!-- next가 있을경우 활성화된다. -->
     <li class="page-item">
+        <a class="page-link" href="?page={{page_obj.next_page_number}}">&larr;Older</a> <!-- 과거의 포스트 페이지로 감 -->
+    </li>
+    {% else %}
+    <li class="page-item disable">
         <a class="page-link" href="#">&larr;Older</a>
     </li>
-    <li class="page-item disabled">
+    {% endif %}
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{page_obj.previous_page_number}}">Newer &rarr;</a><!-- 더욱 최근의 포스트 페이지로 감 -->
+    </li>
+    {% else %}
+    <li class="page-item disable">
         <a class="page-link" href="#">Newer &rarr;</a>
     </li>
+    {% endif %}
 </ul>
 
-
+{% endif %}
 
 {% endblock %}
 
