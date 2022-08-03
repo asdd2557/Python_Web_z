@@ -9,7 +9,7 @@ from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.db.models import Q
 from .models import Post, Category, Tag, Comment
 from .forms import CommentForm
 
@@ -20,7 +20,7 @@ def test1(request):
      return render(request,'blog/Test.html' ) 
 
 
-class PostList( ListView):
+class PostList(ListView):
     model = Post
     # template_name = 'blog/index.html'
     ordering = '-pk'
@@ -214,4 +214,20 @@ def delete_comment(request, pk):
         return redirect(post.get_absolute_url())
     else:
         raise PermissionDenied #해커가 url로 delete_comment.pk를 이용하여 삭제할 수도 있기 때문에 방지하기 위하여 로그인한 사용자의 권한을 확인함
+
+class PostSearch(PostList):
+    paginate_by = None
+    
+    def get_queryset(self):
+        q = self.kwargs['q']
+        post_list = Post.objects.filter(
+            Q(title__contains=q) | Q(tags__name__contains=q)# 제목에  q가있거나 tags에 q가있을경우 표출해줌
+        ).distinct()# 만약 '파이썬'을 검색하면 파이썬이 포함되여있는 포스트가 나타나겠지만 만약 제목과 카테고리 둘다 파이썬이 포함되여있을경우 그 해당 포스트는 2번 노출되기 때문에 distinct()를 사용시 이를 해결할 수 있다.(중복 방지)
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+        return context
 
