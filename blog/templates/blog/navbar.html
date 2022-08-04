@@ -52,8 +52,17 @@
       {% if user.is_authenticated %} <!--로그인한경우-->
       <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="rounded-circle"
+          src="{{user.socialaccount_set.first.get_avatar_url}}" alt="{{user.username}}" width ="25px">
+          {% if user.socialaccount_set.first.get_avatar_url %}
+          {%else%}
+          <img class="rounded-circle"
+          src="https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{{ user.email }}" alt="{{user.username}}" width ="25px">
+          {%endif%}  
+          &nbsp; <!-- 스페이스바 -->
           {{ user.username }}<!-- 유저이름이 나오게함 -->
         </a>
+      
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
 

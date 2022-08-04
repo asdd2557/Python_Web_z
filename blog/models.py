@@ -82,3 +82,9 @@ class Comment(models.Model):
 
     def is_updated(self):
         return self.updated_at - self.created_at > timedelta(seconds = 1)
+
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists(): #구글 사용자일시 구글프로필을 보여준다.
+            return self.author.socialaccount_set.first().get_avatar_url()#장고에서 제공하는 기능인데 해당 사용자의 프로필 사진을 get하여 return해준다.
+        else:
+            return f'https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{self.author.email}' #아닐시에 랜덤으로 나타나는 기본프로필를 보여준다.

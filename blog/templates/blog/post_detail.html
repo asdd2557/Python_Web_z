@@ -135,7 +135,7 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-shrink-0"><img class="rounded-circle"
-                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        src="{{comment.get_avatar_url}}" alt="{{comment.author}}" width ="60px"></div> <!-- alt는 src가 실패할경우 실행되는 함수임 -->
                                 <div class="ms-3">
                                     {% if user.is_authenticated and comment.author == user%}
 
