@@ -4,6 +4,7 @@ from http.client import ResponseNotReady
 from itertools import count
 from pickle import TRUE
 from tkinter import messagebox
+from typing import DefaultDict
 from urllib import response
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
@@ -24,11 +25,12 @@ class TestView(TestCase):
         self.user_admin2.save()
 
         self.category_programming = Category.objects.create(name='programming', slug='programming') #카테고리를 생성한다 이름은 programming
-        self.category_music = Category.objects.create(name='music', slug='music')          #카테고리를 생성하다 이름은 music
+        self.category_music = Category.objects.create(name='music', slug='music')       #카테고리를 생성하다 이름은 music
 
         self.tag_python_kor = Tag.objects.create(name = '파이썬 공부', slug='파이썬-공부')
         self.tag_python = Tag.objects.create(name='python', slug='python')
         self.tag_hello = Tag.objects.create(name='hello', slug='hello')
+
 
         self.post_001 = Post.objects.create(
             title='첫 번째 포스트 입니다.',

@@ -54,9 +54,9 @@ INSTALLED_APPS = [
     'crispy_forms', ## 폼 이쁘게 꾸미기
     'markdownx',
     'blog',
-    #'single_pages',
+    'single_pages',
     #'single_page'
-    'single',
+    #'single',
 ]
 
 MIDDLEWARE = [
