@@ -14,8 +14,8 @@ from .models import Post, Category, Tag, Comment
 from .forms import CommentForm
 
 from django.core.exceptions import PermissionDenied
-import tkinter
-import tkinter.messagebox
+##import tkinter //docker test
+
 def test1(request):
      return render(request,'blog/Test.html' ) 
 
