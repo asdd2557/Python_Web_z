@@ -3,7 +3,7 @@ from email.errors import StartBoundaryNotFoundDefect
 from inspect import TPFLAGS_IS_ABSTRACT
 from urllib import request, response
 from xml.etree.ElementTree import Comment
-from zlib import adler32
+
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView ,UpdateView
