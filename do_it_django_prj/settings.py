@@ -146,7 +146,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/' #URL이 static으로 오는경우에 미디어 파일로 접근하는 로직
-
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 MEDIA_URL = '/media/' #URL이 media로 오는경우에 미디어파일에 접근하는것이다.
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media') #파일이 저장되는곳을 지정해주는로직
 

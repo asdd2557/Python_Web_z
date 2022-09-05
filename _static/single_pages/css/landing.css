@@ -1,0 +1,18 @@
+.card {
+
+    background: rgba(255, 255, 255, 0.6)
+}
+
+section {
+    margin-bottom: 150px;
+}
+
+
+body {
+    background: url('/static/single_pages/images/Space.jpg') no-repeat center center fixed;
+    -webkit-bakcground-size: cover;
+    -moz-background-size: cover;
+    -background-size: cover;
+    -o-background-size: cover;
+}
+
