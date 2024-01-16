@@ -1,0 +1,115 @@
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+
+
+    <title>{% block head_title %} Blog {% endblock %}</title>
+
+    <script src="./resources/js/jquery-3.5.1.min.js"></script>
+    <script src="./resources/js/bootstrap.bundle.min.js"></script>
+    <!-- 아이콘 사용시 필요한 Code임 -->
+    <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+#-----------------------------------------------------------------------------------------------------
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <a class="navbar-brand" href="/">Promicing</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about_me/">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %} <!--로그인한경우-->
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+
+                {% if user.socialaccount_set.first.get_avatar_url %}
+                {%else%}
+                <img class="rounded-circle"
+                     src="https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{{ user.email }}"
+                     alt="{{user.username}}" width="25px">
+                {%endif%}
+                &nbsp;&nbsp; <!-- 스페이스바 -->
+                {{ user.username }}<!-- 유저이름이 나오게함 -->
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
+
+            </div>
+        </div>
+        {% else %}<!-- 로그인이 되지않았을경우 출력 -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="doalog" aria-labelledby="loginModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel"><i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 d-grid gap-2 col-sm-12">
+                        <a role="button" href="{% provider_login_url 'google'%}" type="button"
+                           class="btn btn-outline-dark  btn-sm"><i class="fab fa-google"></i>&nbsp&nbsp Log in with
+                            Google</a>
+
+                        <a role="button" href="/accounts/login/" type="button" class="btn btn-outline-dark  btn-sm"><i
+                                class="fas fa-at"></i>&nbsp&nbsp Log in with E-mail</a>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <a role="button" href="/accounts/signup/" type="button"
+                           class="btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp Sign
+                            Up with E-mail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secodary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -15,4 +15,5 @@ urlpatterns = [
   ## path('',views.landing),
  #  path('about_me/',views.about_me),
    path('<int:pk>/new_comment/', views.new_comment),
+   path('ffg',views.menutest1),
 ]

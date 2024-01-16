@@ -6,6 +6,21 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 from datetime import timedelta
 
+
+
+class Menuname(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    menu1 = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    menu2 = models.SlugField(max_length=200, allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    menu3 = models.SlugField(max_length=200, allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    menu4 = models.SlugField(max_length=200, allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+
+    def __str__(self):
+        return self.name
+
+
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
@@ -94,3 +109,20 @@ class Comment(models.Model):
             return self.author.socialaccount_set.first().get_avatar_url()#장고에서 제공하는 기능인데 해당 사용자의 프로필 사진을 get하여 return해준다.
         else:
             return f'https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{self.author.email}' #아닐시에 랜덤으로 나타나는 기본프로필를 보여준다.
+
+
+#---------------------------------------------------menu----------------------------------------------------------------
+class Menulist(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    address = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    icon = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    collapse = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    mainlinkname = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+
+
+    def __str__(self):
+        return self.name
+
+
+
+

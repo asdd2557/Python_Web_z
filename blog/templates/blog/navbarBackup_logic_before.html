@@ -20,9 +20,9 @@
 
     <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}" media="screen">
 
-    <!-------------------------------사이드바 css--------------------------------------- -->
+   <!-------------------------------사이드바 css--------------------------------------- -->
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'blog/css/newmenu.css' %}">
+      <link rel="stylesheet" href="{% static 'blog/css/newmenu.css' %}">
 
     <!-- --------------------------------사이드바 css 끝------------------------------------- -->
 
@@ -68,75 +68,8 @@
 </nav>
 <!-- ----------------------------------------------로그인 끝-------------------------------------------------------  -->
 
-<!----------------------------------------------------logic------------------------------------------------------->
-
-
-<div class="l-navbar" id="navbar">
-    <nav class="nav">
-        <div>
-            <div class="nav__brand">
-                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                <a href="/" class="nav__logo">Promicing</a>
-
-            </div>
-            <div class="nav__list">
-                {% for menu in menu_list_all%}
-
-                {% if menu.mainlinkname == 'main' and menu.collapse == '' %}
-
-                <a href="/" class="nav__link">
-                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                    <span class="nav_name">{{menu.name}}</span>
-                </a>
-
-
-                {% elif menu.mainlinkname == 'main' and menu.collapse == 'collapse' %}
-
-                <div href="#" class="nav__link collapse_">
-                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                    <span class="nav_name">{{menu.name}}</span>
-
-                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-                    <ul class="collapse__menu">
-
-                        {% for submenu in menu_list_all%}
-                        {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
-
-                        <a href="#" class="collapse__sublink">{{submenu.name}}</a>
-
-
-                        {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
-                        <div href="#" class="collapse__sublink">
-                            <span class="nav_name">{{submenu.name}}</span>
-
-                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                            <ul class="collapse__menu">
-                                {% for subsubmenu in menu_list_all%}
-                                {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
-                                <a href="#" class="collapse__sublink">{{subsubmenu.name}}</a>
-                                {%endif%}
-                                {%endfor%}
-                            </ul>
-                        </div>
-                        {%endif%}
-                        {%endfor%}
-                    </ul>
-                </div>
-
-                {% endif %}
-                {% endfor %}
-
-
-            </div>
-    </nav>
-</div>
-
-<!----------------------------------------------------logic끝------------------------------------------------------->
-
 
 <!-- ----------------------------------------------사이드바-------------------------------------------------------  -->
-<!--
 <div class="l-navbar" id="navbar">
     <nav class="nav">
         <div>
@@ -163,7 +96,7 @@
                 </a>
 
 
-                &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
+                <!--메뉴 안에 메뉴-->
                 <div href="#" class="nav__link collapse_">
                     <ion-icon name="laptop-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">Program</span>
@@ -173,7 +106,7 @@
                     <ul class="collapse__menu">
 
 
-                        &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
+                        <!--메뉴 안에 메뉴-->
                         <div href="#" class="collapse__sublink">
                             <span class="nav_name">Project</span>
 
@@ -187,9 +120,8 @@
                         </div>
 
 
-                        &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
+                        <!--메뉴 안에 메뉴-->
                         <div href="#" class="collapse__sublink">
-                        <ion-icon name="laptop-outline" class="nav__icon"></ion-icon>
                             <span class="nav_name">Language</span>
 
                             <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
@@ -207,7 +139,7 @@
                 </div>
 
 
-                &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
+                <!--메뉴 안에 메뉴-->
                 <div href="#" class="nav__link collapse_">
                     <ion-icon name="transgender-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">Psychology</span>
@@ -227,7 +159,6 @@
         </div>
     </nav>
 </div>
--->
 
 <!-- -----------------------------------------------사이드바 끝------------------------------------------------------  -->
 
@@ -255,8 +186,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <a role="button" href="/accounts/signup/" type="button"
-                           class="btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp
-                            Sign
+                           class="btn btn-outline-dark btn-block btn-sm"><i class="fas fa-user-plus"></i>&nbsp&nbsp Sign
                             Up with E-mail</a>
                     </div>
                 </div>

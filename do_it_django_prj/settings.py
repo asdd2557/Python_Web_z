@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'markdownx',
     'blog',
     'single_pages',
-    #'single_page'
+    #'single_page',
     #'single',
 ]
 

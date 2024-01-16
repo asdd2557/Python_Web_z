@@ -6,19 +6,32 @@ from xml.etree.ElementTree import Comment
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
-from django.views.generic import ListView, DetailView, CreateView ,UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from .models import Post, Category, Tag, Comment
+from .models import Post, Category, Tag, Comment, Menulist
 from .forms import CommentForm
 
 from django.core.exceptions import PermissionDenied
 ##import tkinter //docker test
 
 def test1(request):
-     return render(request,'blog/Test.html' ) 
+     return render(request,'blog/Test.html' )
 
+#-----------------------------menulist--------
+class MenuList(ListView):
+    model = Menulist
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList, self).get_context_data()
+        context['menu_list_count'] = MenuList.objects.count()
+        context['menu_list_all'] = MenuList.objects.all()
+        return context
+
+
+
+#-----------------------------menulist 끝--------
 
 class PostList(ListView):
     model = Post
@@ -193,6 +206,11 @@ def new_comment(request, pk):
     else: 
         raise PermissionError  ## 로그인도 안됐는데 포스트형식으로 정보를 계속 보내면 에러매세지를 띄운다
 
+def menutest1(request):
+    return render(
+        request,
+        'blog/navbar.html'
+    )
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
@@ -214,6 +232,10 @@ def delete_comment(request, pk):
         return redirect(post.get_absolute_url())
     else:
         raise PermissionDenied #해커가 url로 delete_comment.pk를 이용하여 삭제할 수도 있기 때문에 방지하기 위하여 로그인한 사용자의 권한을 확인함
+
+
+
+
 
 class PostSearch(PostList):
     paginate_by = None
