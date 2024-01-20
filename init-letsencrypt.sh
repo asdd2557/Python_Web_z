@@ -8,7 +8,7 @@ fi
 domains=(promicing.com www.promicing.com)
 rsa_key_size=4096
 data_path="./data/certbot"
-email="asdd2557@naver.com" # Adding a valid address is strongly recommended
+email="asdd2t557@gmail.com" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then
