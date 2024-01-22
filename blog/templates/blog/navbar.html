@@ -78,12 +78,21 @@
                 <a href="/" class="nav__logo">Promicing</a>
 
             </div>
+            <a href="/about_me/" class="nav__link">
+                <ion-icon name="flag-outline" class="nav__icon"></ion-icon>
+                <span class="nav_name">Site Introduction</span>
+            </a>
+            <a href="/blog/" class="nav__link">
+                <ion-icon name="reader-outline" class="nav__icon"></ion-icon>
+                <span class="nav_name">All Post</span>
+            </a>
+
             <div class="nav__list">
                 {% for menu in menu_list_all%}
 
                 {% if menu.mainlinkname == '' and menu.collapse == '' %}
 
-                <a href="/{{menu.address}}" class="nav__link">
+                <a href="/blog/category/{{menu.address}}/" class="nav__link">
                     <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
                     <span class="nav_name">{{menu.name}}</span>
                 </a>
@@ -101,7 +110,7 @@
                         {% for submenu in menu_list_all%}
                         {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
 
-                        <a href="/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
+                        <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
 
 
                         {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
@@ -113,7 +122,7 @@
                             <ul class="collapse__menu">
                                 {% for subsubmenu in menu_list_all%}
                                 {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
-                                <a href="/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
+                                <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
                                 {%endif%}
                                 {%endfor%}
                             </ul>

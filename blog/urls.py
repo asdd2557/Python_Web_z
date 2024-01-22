@@ -12,8 +12,5 @@ urlpatterns = [
    path('category/<str:slug>/', views.category_page),
    path('<int:pk>/',views.PostDetail.as_view()),
    path('',views.PostList.as_view()),
-  ## path('',views.landing),
- #  path('about_me/',views.about_me),
    path('<int:pk>/new_comment/', views.new_comment),
-   path('ffg',views.menutest1),
 ]

@@ -15,19 +15,14 @@ def landing(request):
     )
 
 
-def about_me(request):
+def site_introduction(request):
     return render(
         request,
-        'single_pages/about_me.html',
+        'single_pages/site_introduction.html',
         {
             'menu_list_all': Menulist.objects.all(),
         }
     )
 
 
-def menutest(request):
-    return render(
-        request,
-        'single_pages/menutest.html'
-    )
 # Create your views here.

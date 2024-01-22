@@ -186,18 +186,6 @@ class PostUpdate(LoginRequiredMixin, UpdateView):  ##Updateview는 수정하려�
             raise PermissionDenied  ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
 
 
-def landing(request):
-    return render(
-        request,
-        'blog/landing.html'
-    )
-
-
-def about_me(request):
-    return render(
-        request,
-        'blog/about_me.html'
-    )
 
 
 # Create your views here.
@@ -218,11 +206,6 @@ def new_comment(request, pk):
         raise PermissionError  ## 로그인도 안됐는데 포스트형식으로 정보를 계속 보내면 에러매세지를 띄운다
 
 
-def menutest1(request):
-    return render(
-        request,
-        'blog/navbar.html'
-    )
 
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
