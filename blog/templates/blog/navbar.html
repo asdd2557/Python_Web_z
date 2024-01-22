@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="{% static 'blog/css/newmenu.css' %}">
 
     <!-- --------------------------------사이드바 css 끝------------------------------------- -->
-
 </head>
 <body>
 
@@ -84,7 +83,7 @@
 
                 {% if menu.mainlinkname == 'main' and menu.collapse == '' %}
 
-                <a href="/" class="nav__link">
+                <a href="/{{menu.address}}" class="nav__link">
                     <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
                     <span class="nav_name">{{menu.name}}</span>
                 </a>
@@ -102,7 +101,7 @@
                         {% for submenu in menu_list_all%}
                         {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
 
-                        <a href="#" class="collapse__sublink">{{submenu.name}}</a>
+                        <a href="/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
 
 
                         {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
@@ -114,7 +113,7 @@
                             <ul class="collapse__menu">
                                 {% for subsubmenu in menu_list_all%}
                                 {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
-                                <a href="#" class="collapse__sublink">{{subsubmenu.name}}</a>
+                                <a href="/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
                                 {%endif%}
                                 {%endfor%}
                             </ul>

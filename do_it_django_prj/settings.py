@@ -38,6 +38,10 @@ else:
 
 # Application definition
 
+_STATIC = [
+    BASE_DIR / "static",
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
