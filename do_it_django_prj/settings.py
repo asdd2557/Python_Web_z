@@ -29,6 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','b@zg(te-o5db8m^+9a((nd(fs2k224=zlp^s#g
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = int(os.environ.get('DEBUG',1))#인터넷 에러 메세지를 보여줄까에 대한 여부
+##DEBUG = True
 if os.environ.get('DJANGO_ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
 else:
@@ -41,7 +42,7 @@ else:
 _STATIC = [
     BASE_DIR / "static",
 ]
-
+CSRF_TRUSTED_ORIGINS = ['https://*.promicing.com', 'https://*.3.39.18.230']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -75,6 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'allauth.account.middleware.AccountMiddleware',
+   # 'allauth.account.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'do_it_django_prj.urls'
@@ -172,7 +175,35 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True ## 이메일 관리를 할것이냐
-ACCOUNT_EMAIL_VERIFCATION= 'none' ## 회원가입을하면 그 이메일을 보내서 회원가입 할것이냐 물어보는것
+ACCOUNT_EMAIL_VERIFICATION = 'none' ## 회원가입을하면 그 이메일을 보내서 회원가입 할것이냐 물어보는것
 
 LOGIN_REDIRECT_URL = '/' ## 로그아웃하였을경우 블로그홈페이지로 감
 LOGOUT_REDIRECT_URL = '/blog/' ## 로그아웃하였을경우 블로그홈페이지로 감
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'METHOD': 'oauth2',
+        'PROMPT': 'select_account',
+    },
+}
+# settings.py
+
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}

@@ -23,7 +23,7 @@ class Menuname(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(max_length=200, unique=True,allow_unicode=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    slug = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -114,10 +114,10 @@ class Comment(models.Model):
 #---------------------------------------------------menu----------------------------------------------------------------
 class Menulist(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    address = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
-    icon = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
-    collapse = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
-    mainlinkname = models.SlugField(max_length=200,allow_unicode=True, blank=True) #SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    address = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    icon = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    collapse = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    mainlinkname = models.CharField(max_length=50, unique=True, null=True, blank=True)
 
 
     def __str__(self):
