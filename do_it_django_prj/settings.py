@@ -42,7 +42,17 @@ else:
 _STATIC = [
     BASE_DIR / "static",
 ]
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'  # 이미지 저장할 경로
+CKEDITOR_CONFIGS = {
+    'default': {
+        'extraPlugins': ','.join(['codesnippet']),  # CodeSnippet 플러그인 추가 하여 코드 블럭을 사용 할 수 있께 함
+        'toolbar': 'full',
+    },
+}
+
 CSRF_TRUSTED_ORIGINS = ['https://*.promicing.com', 'https://*.3.39.18.230']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,8 +76,9 @@ INSTALLED_APPS = [
     'single_pages',
     #'single_page',
     #'single',
-]
 
+    'ckeditor',#게시물 이미지 넣는 거
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,6 +92,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'do_it_django_prj.urls'
+
+SITE_NAME = 'Promicing' #사이트 이름
 
 TEMPLATES = [
     {

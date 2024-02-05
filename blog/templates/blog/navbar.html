@@ -29,8 +29,12 @@
 <body>
 
 <!-- ----------------------------------------------로그인-------------------------------------------------------  -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+
+
+
+
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %} <!--로그인한경우-->
             <div class="nav-item dropdown">
@@ -67,80 +71,85 @@
 </nav>
 <!-- ----------------------------------------------로그인 끝-------------------------------------------------------  -->
 
-<!----------------------------------------------------logic------------------------------------------------------->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-1">-->
+<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;logic-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--<div class="l-navbar" id="navbar">-->
+<!--    <nav class="nav">-->
+<!--        <div>-->
+<!--            <div class="nav__brand">-->
+<!--                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>-->
+<!--                <a href="/" class="nav__logo">Promicing</a>-->
+
+<!--            </div>-->
+<!--            <a href="/site_introduction/" class="nav__link">-->
+<!--                <ion-icon name="flag-outline" class="nav__icon"></ion-icon>-->
+<!--                <span class="nav_name">Site Introduction</span>-->
+<!--            </a>-->
+<!--            <a href="/blog/" class="nav__link">-->
+<!--                <ion-icon name="reader-outline" class="nav__icon"></ion-icon>-->
+<!--                <span class="nav_name">All Post</span>-->
+<!--            </a>-->
+
+<!--            <div class="nav__list">-->
+<!--                {% for menu in menu_list_all%}-->
+
+<!--                {% if menu.mainlinkname == '' and menu.collapse == '' %}-->
+
+<!--                <a href="/blog/category/{{menu.address}}/" class="nav__link">-->
+<!--                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>-->
+<!--                    <span class="nav_name">{{menu.name}}</span>-->
+<!--                </a>-->
 
 
-<div class="l-navbar" id="navbar">
-    <nav class="nav">
-        <div>
-            <div class="nav__brand">
-                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                <a href="/" class="nav__logo">Promicing</a>
+<!--                {% elif menu.mainlinkname == '' and menu.collapse == 'collapse' %}-->
 
-            </div>
-            <a href="/site_introduction/" class="nav__link">
-                <ion-icon name="flag-outline" class="nav__icon"></ion-icon>
-                <span class="nav_name">Site Introduction</span>
-            </a>
-            <a href="/blog/" class="nav__link">
-                <ion-icon name="reader-outline" class="nav__icon"></ion-icon>
-                <span class="nav_name">All Post</span>
-            </a>
+<!--                <div href="#" class="nav__link collapse_">-->
+<!--                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>-->
+<!--                    <span class="nav_name">{{menu.name}}</span>-->
 
-            <div class="nav__list">
-                {% for menu in menu_list_all%}
+<!--                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>-->
+<!--                    <ul class="collapse__menu">-->
 
-                {% if menu.mainlinkname == '' and menu.collapse == '' %}
+<!--                        {% for submenu in menu_list_all%}-->
+<!--                        {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}-->
 
-                <a href="/blog/category/{{menu.address}}/" class="nav__link">
-                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                    <span class="nav_name">{{menu.name}}</span>
-                </a>
+<!--                        <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>-->
 
 
-                {% elif menu.mainlinkname == '' and menu.collapse == 'collapse' %}
+<!--                        {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}-->
+<!--                        <div href="#" class="collapse__sublink">-->
+<!--                            <span class="nav_name">{{submenu.name}}</span>-->
 
-                <div href="#" class="nav__link collapse_">
-                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                    <span class="nav_name">{{menu.name}}</span>
+<!--                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>-->
 
-                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-                    <ul class="collapse__menu">
+<!--                            <ul class="collapse__menu">-->
+<!--                                {% for subsubmenu in menu_list_all%}-->
+<!--                                {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}-->
+<!--                                <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>-->
+<!--                                {%endif%}-->
+<!--                                {%endfor%}-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        {%endif%}-->
+<!--                        {%endfor%}-->
+<!--                    </ul>-->
+<!--                </div>-->
 
-                        {% for submenu in menu_list_all%}
-                        {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
-
-                        <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
-
-
-                        {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
-                        <div href="#" class="collapse__sublink">
-                            <span class="nav_name">{{submenu.name}}</span>
-
-                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                            <ul class="collapse__menu">
-                                {% for subsubmenu in menu_list_all%}
-                                {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
-                                <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
-                                {%endif%}
-                                {%endfor%}
-                            </ul>
-                        </div>
-                        {%endif%}
-                        {%endfor%}
-                    </ul>
-                </div>
-
-                {% endif %}
-                {% endfor %}
+<!--                {% endif %}-->
+<!--                {% endfor %}-->
 
 
-            </div>
-    </nav>
-</div>
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--</div>-->
 
-<!----------------------------------------------------logic끝------------------------------------------------------->
+<!--&lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;logic끝-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 <!-- ----------------------------------------------사이드바-------------------------------------------------------  -->
@@ -275,11 +284,6 @@
         </div>
     </div>
 </div>
-
-<!-- menu script -->
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-<script src="{% static 'blog/js/mainnewmenu.js' %}"></script>
-<!-- -->
 
 
 </body>

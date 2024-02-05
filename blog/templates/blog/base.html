@@ -13,54 +13,77 @@
     <!-- 아이콘 사용시 필요한 Code임 -->
     <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
 
+    <style>
+        /* 추가된 CSS */
+        #move-card {
+            position: sticky;
+            top: 10px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
+            z-index: 1;
+        }
+
+
+        #main-area {
+            width: 100%; /* 메인 영역을 전체 화면으로 확장 */
+        }
+         #show-sidebar-btn {
+                display: block;
+            }
+    </style>
 
 </head>
 
 <body>
 
 {% include 'blog/navbar.html' %}
-<div class="container my-4">
+
+<div class="container-floid my-4">
+
     <div class="row">
-        <div class="col-md-8 col-lg-9" id="main-area">
+        <div class="col-md-2 col-lg-2">
+            {% include 'blog/sidebar.html' %}
+        </div>
+        <div class="col-md-6 col-lg-6" id="main-area">
             {% block main_area %}
             {% endblock %}
         </div>
         <div class="col-md-4 col-lg-3">
-            <h3>Search</h3>
-            <!-- Search widget-->
-            <div class="card mb-4">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..." id="search-input"
-                               aria-label="Enter search term..." aria-describedby="button-search"/>
-                        <button class="btn btn-primary" id="button-search" type="button" onclick="searchPost();">Go!
-                        </button>
+            <div id=move-card>
+                <h3>Search</h3>
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." id="search-input"
+                                   aria-label="Enter search term..." aria-describedby="button-search"/>
+                            <button class="btn btn-primary" id="button-search" type="button" onclick="searchPost();">Go!
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Categories widget-->
-            <div class="card my-4" id="categories-card">
-                <h5 class="card-header">Categories</h5>
-                <div class="card-body">
-                    <div class="row no-gutters">
-                        <ul>
-                            {% for category in categories %}
+                <!-- Categories widget-->
+                <div class="card my-4" id="categories-card">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row no-gutters">
+                            <ul>
+                                {% for category in categories %}
 
 
-                            <li>
-                                <a href="{{ category.get_absolute_url }}">
-                                    {{ category }}
-                                    ({{category.post_set.count}})
+                                <li>
+                                    <a href="{{ category.get_absolute_url }}">
+                                        {{ category }}
+                                        ({{category.post_set.count}})
 
-                                </a>
+                                    </a>
 
-                            </li>
-                            {% endfor %}
-                            <li>
-                                <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count }})</a>
-                            </li>
-                        </ul>
+                                </li>
+                                {% endfor %}
+                                <li>
+                                    <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count }})</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,7 +96,7 @@
 <!-- Bootstrap core JavaScript -->
 <script>
     function searchPost() {
-        let searchValue = document.getElementById('search-input').value.trim(); 
+        let searchValue = document.getElementById('search-input').value.trim();
         if(searchValue.length > 1){
           location.href="/blog/search/"+ searchValue + "/";
         }
@@ -81,14 +104,17 @@
           alert('검색어('+ searchValue +')가 너무 짦습니다.');
         }
           }
-        
-        document.getElementById('search-input').addEventListener('keyup', function(event){ //id가 search-input인 html 문서에 어떠한 키가 올라올경우의 이벤트를 실행시킨다. 
+
+        document.getElementById('search-input').addEventListener('keyup', function(event){ //id가 search-input인 html 문서에 어떠한 키가 올라올경우의 이벤트를 실행시킨다.
           if(event.key == 'Enter'){//Enter를 눌러 검색 가능하게하는 로직
             searchPost();
           }
         })
 
+
+
 </script>
+
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">

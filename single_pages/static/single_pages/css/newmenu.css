@@ -169,3 +169,8 @@ a {
 ion-icon {
    --ionicon-stroke-width : 18px;
 }
+
+@media (max-width: 768px) { /* 화면 너비가 768px 이하일 때 적용 */
+        #side-bar-hide {
+            display: none; /* 사이드바 숨김 */
+        }

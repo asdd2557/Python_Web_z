@@ -9,10 +9,11 @@ section {
 
 
 body {
-    background: url('/static/single_pages/images/Space.jpg') no-repeat center center fixed;
-    -webkit-bakcground-size: cover;
+    background: url('/static/single_pages/images/black.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
     -moz-background-size: cover;
-    -background-size: cover;
+    background-size: cover;
     -o-background-size: cover;
 }
+
 

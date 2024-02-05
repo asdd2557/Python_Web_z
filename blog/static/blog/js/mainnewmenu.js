@@ -1,19 +1,28 @@
 /* EXPANDER MENU */
 const showMenu = (toggleId, navbarId, bodyId) => {
     const toggle = document.getElementById(toggleId),
-    navbar = document.getElementById(navbarId),
-    bodypadding = document.getElementById(bodyId)
+        navbar = document.getElementById(navbarId),
+        bodypadding = document.getElementById(bodyId)
 
-    if( toggle && navbar ) {
-        toggle.addEventListener('click', ()=>{
-            navbar.classList.toggle('expander');
+    if (toggle && navbar) {
+        toggle.addEventListener('click', () => {
+            // Check if 'expander' class exists in the 'navbar'
+            const isExpander = navbar.classList.contains('expander');
 
-            bodypadding.classList.toggle('body-pd')
-        })
+            // Toggle 'expander' class based on its current state
+            if (isExpander) {
+                navbar.classList.remove('expander');
+                bodypadding.classList.remove('body-pd');
+            } else {
+                navbar.classList.add('expander');
+                bodypadding.classList.add('body-pd');
+            }
+        });
     }
 }
 
-showMenu('nav-toggle', 'navbar', 'body-pd')
+showMenu('nav-toggle', 'navbar', 'body-pd');
+
 
 /* LINK ACTIVE */
 const linkColor = document.querySelectorAll('.nav__link')
