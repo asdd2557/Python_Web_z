@@ -3,50 +3,17 @@
 {% block head_title %}Create Post - Blog{% endblock %}
 
 {% block main_area %}
-    <h1>Create New Post</h1>
-    <hr/>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <table>
-    <tr>
-      <th>{{ form.title.label_tag }}</th>
-      <td>{{ form.title | crispy }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.hook_text.label_tag }}</th>
-      <td>{{ form.hook_text | crispy }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.content.label_tag }}</th>
-      <td>{{ form.content | crispy }}</td>
-    </tr>
-    <!-- 여기에 codebox 필드를 추가 -->
-    <tr>
-      <th>{{ form.codebox.label_tag }}</th>
-      <td>{{ form.codebox | crispy }}</td>
-    </tr>
-    <!-- 나머지 필드들도 추가하시면 됩니다 -->
-    <tr>
-      <th>{{ form.file_upload.label_tag }}</th>
-      <td>{{ form.file_upload | crispy }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.category.label_tag }}</th>
-      <td>{{ form.category | crispy }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <td>
+<h1>Create New Post</h1>
+<hr/>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table><!-- ui를 가지런히 놓을 수 있게해준다.-->
+        {{ form | crispy}} <!-- 폼 이쁘게 꾸미기 -->
         <div id="div_id_tags_str">
-          <label for="id_tags_str">Tags:</label>
-          <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control">
+            <label for="id_tags_str">Tags:</label>
+            <input type="text" name="tags_str" id="id_tags_str" class="textinput textInput form-control">
         </div>
-      </td>
-    </tr>
-  </table>
-  <button type="submit" class="btn btn-success float-right">Submit</button>
+    </table>
+    <button type="submit" class="btn btn-success float-right">Submit</button>
 </form>
-{{ form.media }}
-
-    {{form.media}} <!-- 줄바꿈 -->
+{{form.media}} <!-- 줄바꿈 -->
 {% endblock %}   
