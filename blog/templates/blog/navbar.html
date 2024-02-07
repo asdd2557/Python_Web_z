@@ -29,224 +29,47 @@
 <body>
 
 <!-- ----------------------------------------------로그인-------------------------------------------------------  -->
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-    <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+<div id="navbar-move-card">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
 
 
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %} <!--로그인한경우-->
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
+                        {% if user.socialaccount_set.first.get_avatar_url %}
+                        {%else%}
+                        <img class="rounded-circle"
+                             src="https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{{ user.email }}"
+                             alt="{{user.username}}" width="25px">
+                        {%endif%}
+                        &nbsp; <!-- 스페이스바 -->
+                        {{ user.username }}<!-- 유저이름이 나오게함 -->
 
-        <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %} <!--로그인한경우-->
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </a>
 
-                    {% if user.socialaccount_set.first.get_avatar_url %}
-                    {%else%}
-                    <img class="rounded-circle"
-                         src="https://doitdjango.com/avatar/id/1209/d5a4ca79078b2e40/svg/{{ user.email }}"
-                         alt="{{user.username}}" width="25px">
-                    {%endif%}
-                    &nbsp; <!-- 스페이스바 -->
-                    {{ user.username }}<!-- 유저이름이 나오게함 -->
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                </a>
+                        <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
-                    <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
-
+                    </div>
                 </div>
-            </div>
-            {% else %}<!-- 로그인이 되지않았을경우 출력 -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <ion-icon name="log-in-outline" font-size:100px></ion-icon>
-                    Log In
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
-<!-- ----------------------------------------------로그인 끝-------------------------------------------------------  -->
-
-<!--<div class="container">-->
-<!--    <div class="row">-->
-<!--        <div class="col-lg-1">-->
-<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;logic-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--<div class="l-navbar" id="navbar">-->
-<!--    <nav class="nav">-->
-<!--        <div>-->
-<!--            <div class="nav__brand">-->
-<!--                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>-->
-<!--                <a href="/" class="nav__logo">Promicing</a>-->
-
-<!--            </div>-->
-<!--            <a href="/site_introduction/" class="nav__link">-->
-<!--                <ion-icon name="flag-outline" class="nav__icon"></ion-icon>-->
-<!--                <span class="nav_name">Site Introduction</span>-->
-<!--            </a>-->
-<!--            <a href="/blog/" class="nav__link">-->
-<!--                <ion-icon name="reader-outline" class="nav__icon"></ion-icon>-->
-<!--                <span class="nav_name">All Post</span>-->
-<!--            </a>-->
-
-<!--            <div class="nav__list">-->
-<!--                {% for menu in menu_list_all%}-->
-
-<!--                {% if menu.mainlinkname == '' and menu.collapse == '' %}-->
-
-<!--                <a href="/blog/category/{{menu.address}}/" class="nav__link">-->
-<!--                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>-->
-<!--                    <span class="nav_name">{{menu.name}}</span>-->
-<!--                </a>-->
-
-
-<!--                {% elif menu.mainlinkname == '' and menu.collapse == 'collapse' %}-->
-
-<!--                <div href="#" class="nav__link collapse_">-->
-<!--                    <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>-->
-<!--                    <span class="nav_name">{{menu.name}}</span>-->
-
-<!--                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>-->
-<!--                    <ul class="collapse__menu">-->
-
-<!--                        {% for submenu in menu_list_all%}-->
-<!--                        {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}-->
-
-<!--                        <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>-->
-
-
-<!--                        {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}-->
-<!--                        <div href="#" class="collapse__sublink">-->
-<!--                            <span class="nav_name">{{submenu.name}}</span>-->
-
-<!--                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>-->
-
-<!--                            <ul class="collapse__menu">-->
-<!--                                {% for subsubmenu in menu_list_all%}-->
-<!--                                {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}-->
-<!--                                <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>-->
-<!--                                {%endif%}-->
-<!--                                {%endfor%}-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                        {%endif%}-->
-<!--                        {%endfor%}-->
-<!--                    </ul>-->
-<!--                </div>-->
-
-<!--                {% endif %}-->
-<!--                {% endfor %}-->
-
-
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;logic끝-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!-- ----------------------------------------------사이드바-------------------------------------------------------  -->
-<!--
-<div class="l-navbar" id="navbar">
-    <nav class="nav">
-        <div>
-            <div class="nav__brand">
-                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                <a href="/" class="nav__logo">Promicing</a>
-            </div>
-
-            <div class="nav__list">
-
-                <a href="/" class="nav__link active">
-                    <ion-icon name="home-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Home</span>
-                </a>
-
-                <a href="/about_me/" class="nav__link">
-                    <ion-icon name="flag-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Site Introduction</span>
-                </a>
-
-                <a href="/blog/" class="nav__link">
-                    <ion-icon name="reader-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">All Posts</span>
-                </a>
-
-
-                &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
-                <div href="#" class="nav__link collapse_">
-                    <ion-icon name="laptop-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Program</span>
-
-                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                    <ul class="collapse__menu">
-
-
-                        &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
-                        <div href="#" class="collapse__sublink">
-                            <span class="nav_name">Project</span>
-
-                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                            <ul class="collapse__menu">
-                                <a href="#" class="collapse__sublink">Django</a>
-                                <a href="#" class="collapse__sublink">Tensorflow</a>
-                                <a href="#" class="collapse__sublink">Members</a>
-                            </ul>
-                        </div>
-
-
-                        &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
-                        <div href="#" class="collapse__sublink">
-                        <ion-icon name="laptop-outline" class="nav__icon"></ion-icon>
-                            <span class="nav_name">Language</span>
-
-                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                            <ul class="collapse__menu">
-                                <a href="#" class="collapse__sublink">C# ({{post_all_count}}) </a>
-
-                                <a href="#" class="collapse__sublink">Java</a>
-                                <a href="#" class="collapse__sublink">Python</a>
-                                <a href="#" class="collapse__sublink">HTML</a>
-                                <a href="#" class="collapse__sublink">CSS</a>
-                            </ul>
-                        </div>
-                    </ul>
-                </div>
-
-
-                &lt;!&ndash;메뉴 안에 메뉴&ndash;&gt;
-                <div href="#" class="nav__link collapse_">
-                    <ion-icon name="transgender-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Psychology</span>
-
-                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                    <ul class="collapse__menu">
-                        <a href="#" class="collapse__sublink">Psychoanalysis</a>
-                        <a href="#" class="collapse__sublink">Cognitive</a>
-                        <a href="#" class="collapse__sublink">Gestalt</a>
-                        <a href="#" class="collapse__sublink">Learning</a>
-                    </ul>
-                </div>
-            </div>
-
-
+                {% else %}<!-- 로그인이 되지않았을경우 출력 -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <ion-icon name="log-in-outline" font-size:100px></ion-icon>
+                        Log In
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 </div>
--->
-
-<!-- -----------------------------------------------사이드바 끝------------------------------------------------------  -->
+<!-- ----------------------------------------------로그인 끝-------------------------------------------------------  -->
 
 
 <!-- Modal -->

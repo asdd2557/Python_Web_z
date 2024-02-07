@@ -14,20 +14,42 @@
     <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
 
     <style>
-        /* 추가된 CSS */
-        #move-card {
+
+        /* 업바 수정 */
+        #navbar-move-card {
+            position: sticky;
+            top: 0px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
+            z-index: 2;
+        }
+/* ================================================================== */
+        /* 검색폼 수정 */
+        #search-move-card {
             position: sticky;
             top: 10px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
             z-index: 1;
         }
 
-
+/* ================================================================== */
+        /* 사이드바 수정 */
         #main-area {
             width: 100%; /* 메인 영역을 전체 화면으로 확장 */
         }
+
          #show-sidebar-btn {
-                display: block;
-            }
+            display: block;
+         }
+
+/* ================================================================== */
+         /* 코드 박스 수정 */
+          code {
+            background-color: #343a40 !important;
+            color: white !important; /* 텍스트 색상을 흰색으로 지정 */
+
+          }
+
+          .hljs-keyword {
+            color: #007bff9c;
+          }
     </style>
 
 </head>
@@ -47,7 +69,7 @@
             {% endblock %}
         </div>
         <div class="col-md-4 col-lg-3">
-            <div id=move-card>
+            <div id=search-move-card>
                 <h3>Search</h3>
                 <!-- Search widget-->
                 <div class="card mb-4">
@@ -139,11 +161,19 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-
+<!--메뉴 전용 스크립트-->
 <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 
 <script src="/docs/5.0/assets/js/docs.min.js"></script>
 
+
+<!--코드 박스 사용하기 위한 스크립트-->
+<link rel="stylesheet"href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+ <script src="ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 
 </body>
 

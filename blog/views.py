@@ -15,6 +15,9 @@ from .forms import CommentForm
 
 from django.core.exceptions import PermissionDenied
 
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 ##import tkinter //docker test
 
@@ -98,7 +101,6 @@ def tag_page(request, slug):
             'categories': Category.objects.all(),
             'no_category_post_count': Post.objects.filter(category=None).count(),
             'menu_list_all': Menulist.objects.all()  ##Menu List
-
         }
     )
 
@@ -134,7 +136,7 @@ class PostDetail(DetailView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         context['comment_form'] = CommentForm
         context['menu_list_all'] = Menulist.objects.all()  ##Menu List
-
+        context['ckedit'] = Post.content
         return context
 
 
@@ -241,3 +243,9 @@ class PostSearch(PostList):
         q = self.kwargs['q']
         context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
         return context
+
+
+
+
+def test_view(request):
+    return render(request, 'blog/Test.html')

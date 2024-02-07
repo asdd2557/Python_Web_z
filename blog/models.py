@@ -6,6 +6,9 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 from datetime import timedelta
 from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 class Menuname(models.Model):
@@ -53,7 +56,7 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     hook_text = models.CharField(max_length=100, blank=True)
     # content = MarkdownxField()# models.TextField()
-    content = RichTextField()  # 콘텐츠 에디터
+    content = RichTextUploadingField(blank=True)
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)  # 미디어 파일 안에 블로그 안에 이미지 안에 년도 월 로 만듬
     file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

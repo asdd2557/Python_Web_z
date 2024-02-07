@@ -1,14 +1,72 @@
-{% extends 'blog/base_full_width.html'%}
+<!DOCTYPE html>
+{% load static %}
+<html>
 
-{% block head_title %}Create Post - Blog{% endblock %}
+<head>
 
-{% block main_area %}
+    <title>{% block head_title %} Blog Test {% endblock %}</title>
 
-    <hr/>
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        {{ form }}
-    </table>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
-    </form>
-{% endblock %}
+
+
+</head>
+
+<body>
+
+<div class="code-container">
+    <!-- Your code block goes here -->
+    <pre><code class="language-python">
+        # Your Python code here
+    </code></pre>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Find all code containers
+        var codeContainers = document.querySelectorAll('.code-container');
+
+        // Iterate over each code container
+        codeContainers.forEach(function (container) {
+            // Create a copy button
+            var copyButton = document.createElement('button');
+            copyButton.className = 'copy-button';
+            copyButton.textContent = 'Copy';
+
+            // Append the copy button to the code container
+            container.appendChild(copyButton);
+
+            // Add click event listener to the copy button
+            copyButton.addEventListener('click', function () {
+                // Get the text content of the code block
+                var codeText = container.querySelector('code').textContent;
+
+                // Create a textarea element to hold the code text
+                var textarea = document.createElement('textarea');
+                textarea.value = codeText;
+
+                // Append the textarea to the document
+                document.body.appendChild(textarea);
+
+                // Select the text inside the textarea
+                textarea.select();
+
+                // Copy the selected text to the clipboard
+                document.execCommand('copy');
+
+                // Remove the textarea from the document
+                document.body.removeChild(textarea);
+
+                // Change the button text to indicate copying
+                copyButton.textContent = 'Copied!';
+
+                // Reset the button text after a short delay
+                setTimeout(function () {
+                    copyButton.textContent = 'Copy';
+                }, 1500);
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>

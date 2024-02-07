@@ -188,7 +188,7 @@ ion-icon {
 
 
 
-/* side bar 축소 상태일땐 side bar가 숨겨짐 */
+/* 화면이 축소 상태일땐 side bar가 숨겨짐 */
 @media (max-width: 768px) {
     .l-navbar {
         position: fixed;
@@ -196,7 +196,7 @@ ion-icon {
         left: 0;
         right: auto;
         width: var(--nav--width);
-        height: 13vh;
+        height: 87px;
         background-color: #343a40;
         color: var(--white-color);
         padding: 2.5rem 1.5rem 0rem;
