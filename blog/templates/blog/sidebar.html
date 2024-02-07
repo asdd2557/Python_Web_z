@@ -32,8 +32,8 @@
 
                 <div class="nav__list">
                     {% for menu in menu_list_all%}
-
-                    {% if menu.mainlinkname == '' and menu.collapse == '' %}
+                    <div>{{menu.mainlinkname}}{{menu.collapse}}</div>
+                    {% if menu.mainlinkname == None and menu.collapse == None %}
 
                     <a href="/blog/category/{{menu.address}}/" class="nav__link">
                         <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
@@ -41,7 +41,7 @@
                     </a>
 
 
-                    {% elif menu.mainlinkname == '' and menu.collapse == 'collapse' %}
+                    {% elif menu.mainlinkname == None and menu.collapse == 'collapse' %}
 
                     <div href="#" class="nav__link collapse_">
                         <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
