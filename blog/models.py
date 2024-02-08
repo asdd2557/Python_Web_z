@@ -121,10 +121,10 @@ class Comment(models.Model):
 # ---------------------------------------------------menu----------------------------------------------------------------
 class Menulist(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    address = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    icon = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    collapse = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    mainlinkname = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    address = models.CharField(max_length=50, null=True, blank=True)
+    icon = models.CharField(max_length=50, null=True, blank=True)
+    collapse = models.CharField(max_length=50, null=True, blank=True)
+    mainlinkname = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.name

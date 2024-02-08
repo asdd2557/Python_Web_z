@@ -32,7 +32,7 @@
 
                 <div class="nav__list">
                     {% for menu in menu_list_all%}
-                    <div>{{menu.mainlinkname}}{{menu.collapse}}</div>
+
                     {% if menu.mainlinkname == None and menu.collapse == None %}
 
                     <a href="/blog/category/{{menu.address}}/" class="nav__link">
@@ -134,7 +134,6 @@
                             <ul class="collapse__menu">
                                 <a href="#" class="collapse__sublink">Django</a>
                                 <a href="#" class="collapse__sublink">Tensorflow</a>
-                                <a href="#" class="collapse__sublink">Members</a>
                             </ul>
                         </div>
 
