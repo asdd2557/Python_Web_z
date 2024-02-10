@@ -10,6 +10,10 @@
 {% block main_area %}
 
 
+    <style>
+
+
+    </style>
 
 <!-- Page content-->
 <div class="container mt-5">
@@ -212,54 +216,55 @@
 </div>
 
 
-<!--복사 스크립트-->
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Find all code containers
-        var codeContainers = document.querySelectorAll('.code-container');
+     let tooltipElem; // tooltipElem 함수 선언
 
-        // Iterate over each code container
-        codeContainers.forEach(function (container) {
-            // Create a copy button
-            var copyButton = document.createElement('button');
-            copyButton.className = 'copy-button';
-            copyButton.textContent = 'Copy';
+    document.onmouseover = function(e) {    //document.onmmouserover 마우스가 어떤 요소 위로 올라갈때 발생하는 이벤트를 처리한다.
+      let target = event.target; //마우스 이벤트가 발생한 요소를 가져와 taget변수에 저장함
 
-            // Append the copy button to the code container
-            container.appendChild(copyButton);
+      // data-tooltip 속성이 있는 요소
+      let tooltipHtml = target.dataset.tooltip;
 
-            // Add click event listener to the copy button
-            copyButton.addEventListener('click', function () {
-                // Get the text content of the code block
-                var codeText = container.querySelector('code').textContent;
+      if (!tooltipHtml) //target의 tooltup 값이 없다면 발생
+      return;
 
-                // Create a textarea element to hold the code text
-                var textarea = document.createElement('textarea');
-                textarea.value = codeText;
+      // 툴팁 요소를 만듭니다.
 
-                // Append the textarea to the document
-                document.body.appendChild(textarea);
+      tooltipElem = document.createElement('div'); //div 테그 생성하여 tooltipElem 함수에 저장
+      tooltipElem.className = 'texttip';    //tooltipElem의 클래스 이름을 tooltip으로 바꿈
+      tooltipElem.innerHTML = tooltipHtml;  //tooltupElem의 내용을 위에서 저장했던 tooltipHtml함수를 tooltupElemdiv 테그의 내용에 선언합니다.
+      document.body.append(tooltipElem);  // tooltipElem을 body에 추가합니다.
+      // 툴팁 요소를 data-tooltip 속성이 있는 요소 위, 가운데에 위치시킵니다.
+      let coords = target.getBoundingClientRect();  //target의 위치 정보를 가져와 coords 변수에 저장
+      let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
+      //target.offsetWidth는 설명하려는 객체의 가로 길이, tip box 가로 길이, coords.left는 target의 left 위치값값
 
-                // Select the text inside the textarea
-                textarea.select();
+      if (left < 0) left = 0; // 툴팁이 창 왼쪽 가장자리를 넘지 않도록 합니다. 그리고 Tooltip이 -에 오지 않도록 합니다.
 
-                // Copy the selected text to the clipboard
-                document.execCommand('copy');
+      let top = coords.top - tooltipElem.offsetHeight - 5;
+      if (top < 0) { // 툴팁이 창 위로 넘치면 요소 아래에 보여줍니다.
+        top = coords.top + target.offsetHeight + 5;
+      tooltipElem.style.left = left + 'px';
+      }else
+      {
+      tooltipElem.style.left = coords.left + 'px';
+      }
 
-                // Remove the textarea from the document
-                document.body.removeChild(textarea);
+      tooltipElem.style.top = top + 'px';   //위에서 위치 다 계산하고 적용
+    };
 
-                // Change the button text to indicate copying
-                copyButton.textContent = 'Copied!';
+    document.onmouseout = function(e) { //마우스가 요소를 벗어날때 발생하는 이벤트
 
-                // Reset the button text after a short delay
-                setTimeout(function () {
-                    copyButton.textContent = 'Copy';
-                }, 1500);
-            });
-        });
-    });
+      if (tooltipElem) {
+        tooltipElem.remove();
+        tooltipElem = null;
+      }
+    };
+
 </script>
+
 
 
 {% endblock %}
