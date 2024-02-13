@@ -1,157 +1,29 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/html">
-
-<head>
-    <meta charset="utf-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CKEditor CDN -->
-    <script src="https://cdn.ckeditor.com/4.16.0/standard-all/ckeditor.js"></script>
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Sample Page</title>
+ </head>
+ <body>
 
 
-    <style>
-    body {
-      height: 2000px;
-      /* body 높이를 일부러 키워서 스크롤이 나타나도록 하였습니다. 스크롤 위치에 상관없이 요구사항대로 툴팁이 나타나야 합니다.*/
-    }
-
-    .texttip{
-      /* 툴팁을 꾸며주기 위한 CSS입니다. 다른 스타일을 원하면 수정해도 괜찮습니다. */
-      position: fixed;
-      padding: 10px 20px;
-      border: 1px solid #b3c9ce;
-      border-radius: 4px;
-      text-align: center;
-      font: italic 14px/1.3 sans-serif;
-      color: #333;
-      background: #fff;
-      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
-    }
-
-
-    </style>
-</head>
-
-<body>
+<table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+	<tbody>
+		<tr>
+			<td style="background-color:#ff3399; border-color:#cc0099">1</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ff3399; border-color:#cc0099">3</td>
+			<td>4</td>
+		</tr>
+		<tr>
+			<td style="background-color: #f8f9fa;border-color: #0d6efd;">5</td>
+			<td>6</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
-  <button data-tooltip="버튼 요소 길이보다 툴팁 길이가 훨씬 기네요.">짧은 1버튼</button>
-
-
-  <p data-tooltip="두 줄짜리<br>툴팁">...또 다른 버튼...</p>
-
-
-
-  <p>버튼이 화면 맨 위쪽에 위치하도록 스크롤을 움직여보고, 그 상태에서 툴팁이 제대로 버튼 아래에 나타나는지 확인해보세요.</p>
-
-
-
-
-<textarea id="editor">
-    Test
-</textarea>
-
-
-<script>
-     let tooltipElem; // tooltipElem 함수 선언
-
-    document.onmouseover = function(e) {    //document.onmmouserover 마우스가 어떤 요소 위로 올라갈때 발생하는 이벤트를 처리한다.
-      let target = event.target; //마우스 이벤트가 발생한 요소를 가져와 taget변수에 저장함
-
-      // data-tooltip 속성이 있는 요소
-      let tooltipHtml = target.dataset.tooltip;
-
-      if (!tooltipHtml) //target의 tooltup 값이 없다면 발생
-      return;
-
-      // 툴팁 요소를 만듭니다.
-
-      tooltipElem = document.createElement('div'); //div 테그 생성하여 tooltipElem 함수에 저장
-      tooltipElem.className = 'texttip';    //tooltipElem의 클래스 이름을 tooltip으로 바꿈
-      tooltipElem.innerHTML = tooltipHtml;  //tooltupElem의 내용을 위에서 저장했던 tooltipHtml함수를 tooltupElemdiv 테그의 내용에 선언합니다.
-      document.body.append(tooltipElem);  // tooltipElem을 body에 추가합니다.
-      // 툴팁 요소를 data-tooltip 속성이 있는 요소 위, 가운데에 위치시킵니다.
-      let coords = target.getBoundingClientRect();  //target의 위치 정보를 가져와 coords 변수에 저장
-      let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
-      //target.offsetWidth는 설명하려는 객체의 가로 길이, tip box 가로 길이, coords.left는 target의 left 위치값값
-
-      if (left < 0) left = 0; // 툴팁이 창 왼쪽 가장자리를 넘지 않도록 합니다. 그리고 Tooltip이 -에 오지 않도록 합니다.
-
-      let top = coords.top - tooltipElem.offsetHeight - 5;
-      if (top < 0) { // 툴팁이 창 위로 넘치면 요소 아래에 보여줍니다.
-        top = coords.top + target.offsetHeight + 5;
-      tooltipElem.style.left = left + 'px';
-      }else
-      {
-      tooltipElem.style.left = coords.left + 'px';
-      }
-
-      tooltipElem.style.top = top + 'px';   //위에서 위치 다 계산하고 적용
-    };
-
-    document.onmouseout = function(e) { //마우스가 요소를 벗어날때 발생하는 이벤트
-
-      if (tooltipElem) {
-        tooltipElem.remove();
-        tooltipElem = null;
-      }
-    };
-
-</script>
-
-
-
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            CKEDITOR.replace('editor', {
-                extraPlugins: 'customPlugin'
-            });
-
-            CKEDITOR.plugins.add('customPlugin', {
-                init: function (editor) {
-                    editor.addCommand('customPluginCommand', {
-                        exec: function (editor) {
-                            var selectedText = editor.getSelection().getSelectedText();
-
-                            // 새 창 열기
-                            var newWindow = window.open('', 'customFormWindow', 'width=300,height=200');
-                            newWindow.document.write(
-                                '<html><head><title>Custom Form</title></head><body>' +
-                                '<label for="customInput">값 입력:</label>' +
-                                '<input type="text" id="customInput">' +
-                                '<button onclick="submitCustomForm()">확인</button>' +
-                                '</body></html>'
-                            );
-
-                            // 부모 창에 함수 정의
-                            newWindow.submitCustomForm = function () {
-                                var inputValue = newWindow.document.getElementById('customInput').value;
-
-                                var pElement = new CKEDITOR.dom.element('p');
-                                pElement.setHtml(selectedText);
-                                pElement.setAttribute('data-tooltip', inputValue);
-
-                                editor.getSelection().getStartElement().remove();
-                                editor.insertElement(pElement);
-
-                                // 새 창 닫기
-                                newWindow.close();
-                            };
-                        }
-                    });
-
-                    editor.ui.addButton('CustomPlugin', {
-                        label: '내 버튼',
-                        command: 'customPluginCommand',
-                        toolbar: 'insert'
-                    });
-                }
-            });
-        });
-    </script>
-
-</body>
+ </body>
 </html>
