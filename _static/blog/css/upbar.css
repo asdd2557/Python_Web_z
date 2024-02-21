@@ -1,0 +1,6 @@
+
+#navbar-move-card {
+    position: sticky;
+    top: 0px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
+    z-index: 2;
+}
