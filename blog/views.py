@@ -19,7 +19,7 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
-##import tkinter //docker test
+##import tkinter //docker ckeditor_static_add
 
 
 # -----------------------------menulist--------
@@ -150,6 +150,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView):  ##Updateview는 수정하려�
 
     def get_context_data(self, **kwargs):
         context = super(PostUpdate, self).get_context_data()
+
 
         if self.object.tags.exists():
             tags_str_list = list()

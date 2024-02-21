@@ -10,70 +10,17 @@
     <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
+    <!-- ToolTip css -->
+    <link rel="stylesheet" href="{% static 'blog/css/tooltip.css' %}" media="screen">
+
+    <!-- upbar css -->
+    <link rel="stylesheet" href="{% static 'blog/css/upbar.css' %}" media="screen">
+
     <!-- 아이콘 사용시 필요한 Code임 -->
     <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
 
-    <style>
-
-        /* 업바 수정 */
-        #navbar-move-card {
-            position: sticky;
-            top: 0px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
-            z-index: 2;
-        }
-/* ================================================================== */
-        /* 검색폼 수정 */
-        #search-move-card {
-            position: sticky;
-            top: 10px; /* 원하는 값으로 조절, 화면 상단으로부터 얼마나 떨어져 있는지 설정 */
-            z-index: 1;
-        }
-
-/* ================================================================== */
-        /* 사이드바 수정 */
-        #main-area {
-            width: 100%; /* 메인 영역을 전체 화면으로 확장 */
-        }
-
-         #show-sidebar-btn {
-            display: block;
-         }
-
-/* ================================================================== */
-         /* 코드 박스 수정 */
-          code {
-            background-color: #343a40 !important;
-            color: white !important; /* 텍스트 색상을 흰색으로 지정 */
-
-          }
-
-          .hljs-keyword {
-            color: #007bff9c;
-          }
-
-/* ================================================================== */
-         /* tool tip css */
-    body {
-      height: 2000px;
-      /* body 높이를 일부러 키워서 스크롤이 나타나도록 하였습니다. 스크롤 위치에 상관없이 요구사항대로 툴팁이 나타나야 합니다.*/
-    }
-
-    .texttip {
-      /* 툴팁을 꾸며주기 위한 CSS입니다. 다른 스타일을 원하면 수정해도 괜찮습니다. */
-      position: fixed;
-      padding: 10px 20px;
-      border: 1px solid #b3c9ce;
-      border-radius: 4px;
-      text-align: center;
-      font: italic 14px/1.3 sans-serif;
-      color: #333;
-      background: #fff;
-      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
-        z-index: 1030;
-    }
-
-
-    </style>
+    <!-- 구글 광고 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3694703747477692" crossorigin="anonymous"></script>
 
 </head>
 
@@ -91,74 +38,12 @@
             {% block main_area %}
             {% endblock %}
         </div>
-        <div class="col-md-4 col-lg-3">
-            <div id=search-move-card>
-                <h3>Search</h3>
-                <!-- Search widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Search</div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Enter search term..." id="search-input"
-                                   aria-label="Enter search term..." aria-describedby="button-search"/>
-                            <button class="btn btn-primary" id="button-search" type="button" onclick="searchPost();">Go!
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Categories widget-->
-                <div class="card my-4" id="categories-card">
-                    <h5 class="card-header">Categories</h5>
-                    <div class="card-body">
-                        <div class="row no-gutters">
-                            <ul>
-                                {% for category in categories %}
 
-
-                                <li>
-                                    <a href="{{ category.get_absolute_url }}">
-                                        {{ category }}
-                                        ({{category.post_set.count}})
-
-                                    </a>
-
-                                </li>
-                                {% endfor %}
-                                <li>
-                                    <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count }})</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 {% include 'blog/footer.html' %}
 
-<!-- document는 html 문서를 가르킨다. getElementById는 html의 id중 search-input에 해당하는 값을 trim하여(공백제거)searchValue에 값을 넣어준다. -->
-<!-- Bootstrap core JavaScript -->
-<script>
-    function searchPost() {
-        let searchValue = document.getElementById('search-input').value.trim();
-        if(searchValue.length > 1){
-          location.href="/blog/search/"+ searchValue + "/";
-        }
-        else{
-          alert('검색어('+ searchValue +')가 너무 짦습니다.');
-        }
-          }
 
-        document.getElementById('search-input').addEventListener('keyup', function(event){ //id가 search-input인 html 문서에 어떠한 키가 올라올경우의 이벤트를 실행시킨다.
-          if(event.key == 'Enter'){//Enter를 눌러 검색 가능하게하는 로직
-            searchPost();
-          }
-        })
-
-
-
-</script>
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -180,23 +65,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 
-<!--메뉴 전용 스크립트-->
+
+
 <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 
-<script src="/docs/5.0/assets/js/docs.min.js"></script>
-
+1
 
 <!--코드 박스 사용하기 위한 스크립트-->
-<link rel="stylesheet"href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+<link rel="stylesheet" href="{% static 'blog/css/highlight.css' %}" media="screen">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
 
-    <script>hljs.initHighlightingOnLoad();</script>
- <script src="ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 </body>
 

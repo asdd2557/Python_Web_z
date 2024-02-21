@@ -28,7 +28,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('single_pages.urls'), name ='Promicing'),
-    path('ckeditor/', include('ckeditor_uploader.urls')),#이미지 관한것
+    path('ckeditor_static_add/', include('ckeditor_uploader.urls')),#이미지 관한것
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

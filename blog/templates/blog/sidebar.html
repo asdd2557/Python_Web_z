@@ -13,78 +13,131 @@
 </head>
 <body>
 <!----------------------------------------------------logic------------------------------------------------------->
+<div class="l-navbar" id="navbar">
+    <nav class="nav">
+        <div class="container-floid my4">
+            <div class="row">
 
-    <div class="l-navbar" id="navbar">
-        <nav class="nav">
-            <div>
-                <div class="nav__brand">
-                    <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="/" class="nav__logo">Promicing</a>
-                </div>
-                <a href="/site_introduction/" class="nav__link">
-                    <ion-icon name="flag-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Site Introduction</span>
-                </a>
-                <a href="/blog/" class="nav__link">
-                    <ion-icon name="reader-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">All Post</span>
-                </a>
+                <div class="col-md-3 col-lg-3" id="menu-filed">
 
-                <div class="nav__list">
-                    {% for menu in menu_list_all%}
+                    <div>
+                        <div class="nav__brand">
+                            <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                            <a href="/" class="nav__logo">Promicing</a>
+                        </div>
+                        <a href="/site_introduction/" class="nav__link">
+                            <ion-icon name="flag-outline" class="nav__icon"></ion-icon>
+                            <span class="nav_name">Site Introduction</span>
+                        </a>
+                        <a href="/blog/" class="nav__link">
+                            <ion-icon name="reader-outline" class="nav__icon"></ion-icon>
+                            <span class="nav_name">All Post</span>
+                        </a>
 
-                    {% if menu.mainlinkname == None and menu.collapse == None %}
+                        <div class="nav__list">
+                            {% for menu in menu_list_all%}
 
-                    <a href="/blog/category/{{menu.address}}/" class="nav__link">
-                        <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                        <span class="nav_name">{{menu.name}}</span>
-                    </a>
+                            {% if menu.mainlinkname == None and menu.collapse == None %}
 
+                            <a href="/blog/category/{{menu.address}}/" class="nav__link">
+                                <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
+                                <span class="nav_name">{{menu.name}}</span>
+                            </a>
 
-                    {% elif menu.mainlinkname == None and menu.collapse == 'collapse' %}
+                            {% elif menu.mainlinkname == None and menu.collapse == 'collapse' %}
 
-                    <div href="#" class="nav__link collapse_">
-                        <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
-                        <span class="nav_name">{{menu.name}}</span>
-
-                        <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-                        <ul class="collapse__menu">
-
-                            {% for submenu in menu_list_all%}
-                            {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
-
-                            <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
-
-
-                            {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
-                            <div href="#" class="collapse__sublink">
-                                <span class="nav_name">{{submenu.name}}</span>
+                            <div href="#" class="nav__link collapse_">
+                                <ion-icon name={{menu.icon}} class="nav__icon"></ion-icon>
+                                <span class="nav_name">{{menu.name}}</span>
 
                                 <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
                                 <ul class="collapse__menu">
-                                    {% for subsubmenu in menu_list_all%}
-                                    {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
-                                    <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
+
+                                    {% for submenu in menu_list_all%}
+                                    {% if submenu.collapse == 'sub' and submenu.mainlinkname == menu.name %}
+
+                                    <a href="/blog/category/{{submenu.address}}/" class="collapse__sublink">{{submenu.name}}</a>
+
+                                    {% elif submenu.mainlinkname == menu.name and submenu.collapse == 'collapse' %}
+                                    <div href="#" class="collapse__sublink">
+                                        <span class="nav_name">{{submenu.name}}</span>
+
+                                        <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                                        <ul class="collapse__menu">
+                                            {% for subsubmenu in menu_list_all%}
+                                            {% if subsubmenu.collapse == 'sub' and subsubmenu.mainlinkname == submenu.name%}
+                                            <a href="/blog/category/{{subsubmenu.address}}/" class="collapse__sublink">{{subsubmenu.name}}</a>
+                                            {%endif%}
+                                            {%endfor%}
+                                        </ul>
+                                    </div>
                                     {%endif%}
                                     {%endfor%}
                                 </ul>
                             </div>
-                            {%endif%}
-                            {%endfor%}
-                        </ul>
+                            {% endif %}
+                            {% endfor %}
+
+                        </div>
                     </div>
-
-                    {% endif %}
-                    {% endfor %}
+                </div>
 
 
+                <!-------------------------------------------------search------------------------------------------------------ -->
+
+
+                    <div class="col-md-3 col-lg-5" id="search-filed">
+                          <div id="body-pd">
+                        <div id=search-move-card>
+                            <h3>Search</h3>
+                            <!-- Search widget-->
+                            <div class="card mb-4">
+                                <div class="card-header">Search</div>
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" placeholder="Enter search term..."
+                                               id="search-input"
+                                               aria-label="Enter search term..." aria-describedby="button-search"/>
+                                        <button class="btn btn-primary" id="button-search" type="button"
+                                                onclick="searchPost();">Go!
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Categories widget-->
+                            <div class="card my-4" id="categories-card">
+                                <h5 class="card-header">Categories</h5>
+                                <div class="card-body">
+                                    <div class="row no-gutters">
+                                        <ul>
+                                            {% for category in categories %}
+
+
+                                            <li>
+                                                <a href="{{ category.get_absolute_url }}">
+                                                    {{ category }}
+                                                    ({{category.post_set.count}})
+
+                                                </a>
+
+                                            </li>
+                                            {% endfor %}
+                                            <li>
+                                                <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count}})</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </div>
-
-
+        </div>
+    </nav>
+</div>
+<!-------------------------------------------------search 끝------------------------------------------------------ -->
 <!-------------------------------------------------logic------------------------------------------------------ -->
 
 <!-- ----------------------------------------------사이드바-------------------------------------------------------  -->
@@ -181,10 +234,34 @@
 -->
 
 <!-- -----------------------------------------------사이드바 끝------------------------------------------------------  -->
+
 <!-- menu script -->
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 <script src="{% static 'blog/js/mainnewmenu.js' %}"></script>
 <!-- -->
+
+
+<!-- document는 html 문서를 가르킨다. getElementById는 html의 id중 search-input에 해당하는 값을 trim하여(공백제거)searchValue에 값을 넣어준다. -->
+<!-- Bootstrap core JavaScript -->
+<script>
+    function searchPost() {
+        let searchValue = document.getElementById('search-input').value.trim();
+        if(searchValue.length > 1){
+          location.href="/blog/search/"+ searchValue + "/";
+        }
+        else{
+          alert('검색어('+ searchValue +')가 너무 짦습니다.');
+        }
+          }
+
+        document.getElementById('search-input').addEventListener('keyup', function(event){ //id가 search-input인 html 문서에 어떠한 키가 올라올경우의 이벤트를 실행시킨다.
+          if(event.key == 'Enter'){//Enter를 눌러 검색 가능하게하는 로직
+            searchPost();
+          }
+        })
+
+</script>
+
 
 </body>
 </html>

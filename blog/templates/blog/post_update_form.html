@@ -3,6 +3,11 @@
 {% block head_title %}Edit Post - Blog{% endblock %}
 
 {% block main_area %}
+<!-- CKEditor CDN 링크 (버전은 최신 버전으로 변경 가능) -->
+<!-- CKEditor CDN 링크 (버전은 최신 버전으로 변경 가능) -->
+<script src="https://cdn.ckeditor.com/ckeditor5/46.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+
     <h1>Edit Post</h1>
     <hr/>
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -17,4 +22,9 @@
     </table>
     <button type="submit" class="btn btn-primary float-right">Submit</button>
     </form>
+
+
+
+
+
 {% endblock %}

@@ -3,6 +3,7 @@ const showMenu = (toggleId, navbarId, bodyId) => {
     const toggle = document.getElementById(toggleId),
         navbar = document.getElementById(navbarId),
         bodypadding = document.getElementById(bodyId)
+        bodypaddingBackup = bodypadding.cloneNode(true);
 
     if (toggle && navbar) {
         toggle.addEventListener('click', () => {
@@ -12,10 +13,13 @@ const showMenu = (toggleId, navbarId, bodyId) => {
             // Toggle 'expander' class based on its current state
             if (isExpander) {
                 navbar.classList.remove('expander');
-                bodypadding.classList.remove('body-pd');
+                bodypadding.innerHTML = '';
             } else {
                 navbar.classList.add('expander');
-                bodypadding.classList.add('body-pd');
+                if(bodypadding.innerHTML == '') {
+                bodypadding.innerHTML = bodypaddingBackup.innerHTML;
+                }
+
             }
         });
     }
@@ -45,3 +49,5 @@ for(i=0;i<linkCollapse.length;i++) {
         rotate.classList.toggle('rotate')
     });
 }
+
+

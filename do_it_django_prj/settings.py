@@ -15,6 +15,7 @@ import os # 미디어 파일을 쓰겠다.
 
 from pathlib import Path
 from telnetlib import LOGOUT
+from django.shortcuts import render
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +29,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY','b@zg(te-o5db8m^+9a((nd(fs2k224=zlp^s#g
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = int(os.environ.get('DEBUG',1))#인터넷 에러 메세지를 보여줄까에 대한 여부
-##DEBUG = True
+#DEBUG = int(os.environ.get('DEBUG',1))#인터넷 에러 메세지를 보여줄까에 대한 여부
+DEBUG = True
 if os.environ.get('DJANGO_ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
 else:
@@ -68,11 +69,10 @@ INSTALLED_APPS = [
     'markdownx',
     'blog',
     'single_pages',
-    #'single_page',
-    #'single',
 
     'ckeditor',#게시물 이미지 넣는 거
-    'ckeditor_uploader' #?
+    'ckeditor_uploader',
+    'ckeditor_static_add', #ckeditor 전용 static
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -217,10 +217,11 @@ LOGGING = {
 }
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'  # 이미지 저장할 경로
-CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
 CKEDITOR_CONFIGS = {
     'default': {
-        'extraPlugins': ','.join(['codesnippet']),  # CodeSnippet 플러그인 추가 하여 코드 블럭을 사용 할 수 있께 함
+        'extraPlugins': 'codesnippet,timestamp,tooltip',  # 추가된 플러그인 이름들
         'toolbar': 'full',
+        'allowedContent': True,
     },
 }
