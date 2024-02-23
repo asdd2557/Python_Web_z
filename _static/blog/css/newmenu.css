@@ -132,7 +132,7 @@ a {
     left: 0;
     right: auto;
     height: 100vh;
-    background-color: #343a40;
+    background-color: #343a40f0;
     color: var(--white-color);
     padding: 1.5rem 1.5rem 2rem;
     transition: .5s;
