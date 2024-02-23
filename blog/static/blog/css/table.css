@@ -1,0 +1,11 @@
+table {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 1px;
+}
+
+th, td {
+  text-indent: initial;
+  border: 1px solid black;
+  padding: 3px;
+}

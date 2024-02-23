@@ -1,9 +1,9 @@
 /* EXPANDER MENU */
-const showMenu = (toggleId, navbarId, bodyId) => {
+const showMenu = (toggleId, navbarId, bodyId, extraId) => {
     const toggle = document.getElementById(toggleId),
         navbar = document.getElementById(navbarId),
-        bodypadding = document.getElementById(bodyId)
-        bodypaddingBackup = bodypadding.cloneNode(true);
+        extra = document.getElementById(extraId)
+        extraBackup = extra.cloneNode(true);
 
     if (toggle && navbar) {
         toggle.addEventListener('click', () => {
@@ -13,11 +13,11 @@ const showMenu = (toggleId, navbarId, bodyId) => {
             // Toggle 'expander' class based on its current state
             if (isExpander) {
                 navbar.classList.remove('expander');
-                bodypadding.innerHTML = '';
+                extra.innerHTML = '';
             } else {
                 navbar.classList.add('expander');
-                if(bodypadding.innerHTML == '') {
-                bodypadding.innerHTML = bodypaddingBackup.innerHTML;
+                if(extra.innerHTML == '') {
+                extra.innerHTML = extraBackup.innerHTML;
                 }
 
             }
@@ -25,7 +25,7 @@ const showMenu = (toggleId, navbarId, bodyId) => {
     }
 }
 
-showMenu('nav-toggle', 'navbar', 'body-pd');
+showMenu('nav-toggle', 'navbar', 'body-pd', 'extra-content');
 
 
 /* LINK ACTIVE */

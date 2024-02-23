@@ -1,4 +1,3 @@
-
 {% load socialaccount %}
 
 
@@ -15,14 +14,14 @@
 
 
 </head>
-<body>
+<body id ="body-pd">
 <!----------------------------------------------------logic------------------------------------------------------->
 <div class="l-navbar" id="navbar">
     <nav class="nav">
         <div class="container-floid my4">
             <div class="row">
 
-                <div class="col-md-2 col-lg-2" id="menu-filed">
+                <div class="col-md-2 col-lg-5" id="menu-filed">
 
                     <div>
                         <div class="nav__brand">
@@ -91,9 +90,8 @@
                 <!-------------------------------------------------search------------------------------------------------------ -->
 
 
-                    <div class="col-md-3 col-lg-5" id="search-filed">
-                          <div id="body-pd">
-                        <div id=search-move-card>
+                <div class="col-md-3 col-lg-5" id="search-filed">
+                    <div id="extra-content">
                             <h3>Search</h3>
                             <!-- Search widget-->
                             <div class="card mb-4">
@@ -116,8 +114,6 @@
                                     <div class="row no-gutters">
                                         <ul>
                                             {% for category in categories %}
-
-
                                             <li>
                                                 <a href="{{ category.get_absolute_url }}">
                                                     {{ category }}
@@ -128,13 +124,13 @@
                                             </li>
                                             {% endfor %}
                                             <li>
-                                                <a href="/blog/category/no_category/">미분류 ({{ no_category_post_count}})</a>
+                                                <a href="/blog/category/no_category/">미분류 ({{no_category_post_count}})</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -263,6 +259,7 @@
             searchPost();
           }
         })
+
 
 </script>
 
