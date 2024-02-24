@@ -1,0 +1,4 @@
+.english {
+  font-weight: bold; /* 영어인 경우 글꼴 굵기 변경 */
+  background-color: orange; /* 영어인 경우 텍스트 색상 변경 */
+}
