@@ -47,7 +47,10 @@ ul {
 a {
     text-decoration: none;
 }
-
+#vertical-line {
+  border-left: 1px dashed #9a9a9a; /* 5px 두께의 점선 */
+  height: 100rem;
+}
 /* l NAV */
 .l-navbar {
     position: fixed;
@@ -64,6 +67,11 @@ a {
 }
 
 .l-navbar:not(.expander) #extra-content {
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity 0.2s, visibility 0.2s;
+}
+.l-navbar:not(.expander) #vertical-line {
    opacity: 0;
    visibility: hidden;
    transition: opacity 0.2s, visibility 0.2s;
@@ -91,7 +99,11 @@ a {
     visibility: visible;
     transition: opacity 3.5s, visibility 3.5s;
 }
-
+.expander #vertical-line {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 3.5s, visibility 3.5s;
+}
 
 
 /* NAV */
@@ -203,9 +215,6 @@ ion-icon {
 }
 
 
-
-
-
 /* 화면이 축소 상태일땐 side bar가 숨겨짐 */
 @media (max-width: 768px) {
     .l-navbar {
@@ -239,7 +248,3 @@ ion-icon {
     z-index: var(--z-fixed);
 }
 
-#vertical-line {
-  border-left: 5px dashed #9a9a9a; /* 5px 두께의 점선 */
-  height: 200px;
-}

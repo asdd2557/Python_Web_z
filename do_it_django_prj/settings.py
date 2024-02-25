@@ -220,7 +220,7 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'  # 이미지 저장할 경로
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'extraPlugins': 'codesnippet,timestamp,tooltip',  # 추가된 플러그인 이름들
+        'extraPlugins': 'codesnippet,timestamp,tooltip,englishauto',  # 추가된 플러그인 이름들
         'toolbar': 'full',
         'allowedContent': True,
     },

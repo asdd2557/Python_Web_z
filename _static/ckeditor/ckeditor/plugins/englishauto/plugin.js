@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* CSS */
-    .english {
-      font-weight: bold; /* 영어인 경우 글꼴 굵기 변경 */
-      color: orange; /* 영어인 경우 텍스트 색상 변경 */
-    }
-  </style>
-  <title>Text Styling Example</title>
-</head>
-<body>
-  <div id="main-area">
-    <p id="text-to-style">한글 English 한글 English 한글 English 한글 English</p>
-  </div>
-  <button onclick="applyStyle()">Apply Style to Selected Text</button>
+/**
+ * Copyright (c) 2014-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * Licensed under the terms of the MIT License (see LICENSE.md).
+ *
+ * Basic sample plugin inserting current date and time into the CKEditor editing area.
+ *
+ * Created out of the CKEditor Plugin SDK:
+ * https://ckeditor.com/docs/ckeditor4/latest/guide/plugin_sdk_intro.html
+ */
 
-  <script>
-    // JavaScript
-    function applyStyle() {
-      var selection = window.getSelection();
+// Register the plugin within the editor.
+CKEDITOR.plugins.add( 'englishauto', {
 
+	icons: 'englishauto',
+
+	init: function( editor ) {
+
+		editor.addCommand( 'insertEnglishauto', {
+
+			// Define the function that will be fired when the command is executed.
+			exec: function( editor ) {
+				 var selection = window.getSelection();
       var range = selection.getRangeAt(0);
 
       var selectedText = range.toString();
@@ -54,7 +51,21 @@
 
       range.deleteContents();
       range.insertNode(spanContainer);
+			}
+		});
+
+		// Create the toolbar button that executes the above command.
+		editor.ui.addButton( 'Englishauto', {
+			label: 'Insert Englishauto',
+			command: 'insertEnglishauto',
+			toolbar: 'insert',
+		});
+	}
+	});
+
+
+	//
+
+	 function applyStyle() {
+
     }
-  </script>
-</body>
-</html>
