@@ -5,47 +5,19 @@ CKEDITOR.plugins.add('englishauto', {
     editor.addCommand('insertEnglishauto', {
       exec: function (editor) {
         var selection = editor.getSelection();
-        var selection_english = '';
-        var styledText = "";
+        var ranges = selection.getRanges();
 
-                if (selection) {
-          var selectedText = selection.getSelectedText();
-          if (selectedText) {
+        for (var i = 0; i < ranges.length; i++) {
+          var range = ranges[i];
+          var selectedText = range.toString();
 
+          // 굵게 백그라운드 주황색으로 스타일 적용
+          var styledText = '<span style="font-weight: bold; background-color: orange;">' + selectedText + '</span>';
 
-        for (var i = 0; i < selectedText.length; i++){
-            var currentChar = selectedText.charAt(i);
-                    if (/^[a-zA-Z]+$/.test(currentChar)) {
-          // 한글이 나오거나 공백이 나올 때까지 글자를 묶음
-          var englishWord = "";
-          while (/^[a-zA-Z]+$/.test(currentChar) && i < selectedText.length) {
-            englishWord += currentChar;
-            i++;
-            currentChar = selectedText.charAt(i);
-          }
-
-          // 묶인 영어에 스타일 적용
-          styledText += '<span class="english">' + englishWord + '</span>';
-
-        } else {
-          // 영어가 아닌 경우 그대로 추가
-          styledText += currentChar;
+          // 현재 선택된 텍스트를 삭제하고 스타일이 적용된 텍스트를 삽입
+          range.deleteContents();
+          range.insertNode(CKEDITOR.dom.element.createFromHtml(styledText, editor.document));
         }
-
-        }
-
-
-
-          }
-          console.log(styledText);
-        editor.setData(styledText);
-        }
-
-
-
-
-
-
       }
     });
 

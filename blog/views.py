@@ -47,6 +47,7 @@ class PostList(ListView):
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         context['menu_list_all'] = Menulist.objects.all()  ##Menu List
+        context['tags'] = Tag.objects.all()
         return context
 
 
@@ -137,6 +138,7 @@ class PostDetail(DetailView):
         context['comment_form'] = CommentForm
         context['menu_list_all'] = Menulist.objects.all()  ##Menu List
         context['ckedit'] = Post.content
+        context['tags'] = Tag.objects.all()
         return context
 
 

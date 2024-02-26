@@ -79,14 +79,12 @@
                             </div>
                             {% endif %}
                             {% endfor %}
-
                         </div>
                     </div>
                 </div>
                 <div class="col-1 col-md-1 col-lg-1" id = "vertical-line">
-
+                    
                 </div>
-
                 <!-------------------------------------------------search------------------------------------------------------ -->
 
 
@@ -118,7 +116,6 @@
                                             <a href="{{ category.get_absolute_url }}">
                                                 {{ category }}
                                                 ({{category.post_set.count}})
-
                                             </a>
 
                                         </li>
@@ -130,7 +127,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card my-4" id="tags-card">
+                            <h5 class="card-header bg-dark">Tags</h5>
+                            <div class="card-body">
+                                <div class="row no-gutters">
+                                     <ul>
+                                        {% for tag in tags %}
+                                        <li>
+                                            <a href="{{ category.get_absolute_url }}">
 
+                                                <a href="{{ tag.get_absolute_url }}"> <span class="badge badge-dark">{{tag}}</span></a>
+                                            </a>
+
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,10 +275,6 @@
             searchPost();
           }
         })
-
-
-
-
 </script>
 
 

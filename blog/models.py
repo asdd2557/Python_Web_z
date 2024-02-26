@@ -42,8 +42,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=200, unique=True,
-                            allow_unicode=True)  # SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
+    slug = models.SlugField(max_length=200, unique=True,allow_unicode=True)  # SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
 
     def __str__(self):
         return self.name

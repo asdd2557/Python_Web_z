@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from blog.models import Post, Category, Menulist
+from blog.models import Post, Category, Tag, Menulist
 
 
 def landing(request):
@@ -13,7 +13,7 @@ def landing(request):
             'menu_list_all': Menulist.objects.all(),
             'categories': Category.objects.all(),
             'no_category_post_count': Post.objects.filter(category=None).count(),
-
+            'tags': Tag.objects.all(),
         }
     )
 
@@ -25,6 +25,9 @@ def site_introduction(request):
         'single_pages/site_introduction.html',
         {
             'menu_list_all': Menulist.objects.all(),
+            'categories': Category.objects.all(),
+            'no_category_post_count': Post.objects.filter(category=None).count(),
+            'tags': Tag.objects.all(),
         }
     )
 
