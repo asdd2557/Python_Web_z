@@ -122,7 +122,8 @@ def category_page(request, slug):
             'categories': Category.objects.all(),
             'no_category_post_count': Post.objects.filter(category=None).count(),
             'category': category,
-            'menu_list_all': Menulist.objects.all()##Menu List
+            'tags': Tag.objects.all(),
+            'menu_list_all': Menulist.objects.all(),##Menu List
     }
 
     )
