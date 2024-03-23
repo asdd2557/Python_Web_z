@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{% static 'blog/css/table.css' %}" media="screen">
     <!-- upbar css -->
     <link rel="stylesheet" href="{% static 'blog/css/upbar.css' %}" media="screen">
+    <!-- bodt css-->
+    <link rel="stylesheet" href="{% static 'blog/css/body.css' %}" >
 
     <!-- 아이콘 사용시 필요한 Code임 -->
     <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
@@ -40,7 +42,7 @@
         <div class="col-md-2 col-lg-2">
             {% include 'blog/sidebar.html' %}
         </div>
-        <div class="col-md-6 col-lg-6" id="main-area">
+        <div class="col-md-7 col-lg-7" id="main-area">
             {% block main_area %}
             {% endblock %}
         </div>
