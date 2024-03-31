@@ -27,8 +27,8 @@ class Menuname(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=200, unique=True)
+    slug = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         return self.name
@@ -98,8 +98,8 @@ class Comment(models.Model):
 
     content = models.TextField()  ##댓글은 화려하지 않게 텍스트 형식으로만 작성할 수 있게 만들었다.
    # author = models.ForeignKey(User, on_delete=models.CASCADE)  ##유저가 삭제될경우 해당된 게시물과 댓글이 같이 삭제됨
-    nickname = models.CharField(max_length=10)
-    password = models.CharField(max_length=12)
+    nickname = models.TextField(max_length=10)
+    password = models.TextField(max_length=12)
     created_at = models.DateTimeField(auto_now_add=True)  ## 작석일
     updated_at = models.DateTimeField(auto_now=True)  ##업데이트일
 
