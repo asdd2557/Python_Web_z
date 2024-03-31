@@ -41,7 +41,7 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True,allow_unicode=True)  # SlugField는 기본적으로 한글을 지원하지 않아서 allow_unicode = True는 한국어를 사용할 수 있게해주는 언어다.
 
     def __str__(self):
@@ -52,8 +52,8 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=30)
-    hook_text = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=200)
+    hook_text = models.CharField(max_length=200, blank=True)
     # content = MarkdownxField()# models.TextField()
     content = RichTextUploadingField(blank=True)
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)  # 미디어 파일 안에 블로그 안에 이미지 안에 년도 월 로 만듬
@@ -97,9 +97,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)  ##해당 글이 삭제될경우 연관된 댓글도 같이 삭제됨
 
     content = models.TextField()  ##댓글은 화려하지 않게 텍스트 형식으로만 작성할 수 있게 만들었다.
-   # author = models.ForeignKey(User, on_delete=models.CASCADE)  ##유저가 삭제될경우 해당된 게시물과 댓글이 같이 삭제됨
-    nickname = models.TextField(max_length=10)
-    password = models.TextField(max_length=12)
+    nickname = models.CharField(max_length=10)
+    password = models.CharField(max_length=12)
     created_at = models.DateTimeField(auto_now_add=True)  ## 작석일
     updated_at = models.DateTimeField(auto_now=True)  ##업데이트일
 
