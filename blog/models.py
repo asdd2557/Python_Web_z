@@ -95,13 +95,16 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)  ##해당 글이 삭제될경우 연관된 댓글도 같이 삭제됨
-    author = models.ForeignKey(User, on_delete=models.CASCADE)  ##유저가 삭제될경우 해당된 게시물과 댓글이 같이 삭제됨
+
     content = models.TextField()  ##댓글은 화려하지 않게 텍스트 형식으로만 작성할 수 있게 만들었다.
+   # author = models.ForeignKey(User, on_delete=models.CASCADE)  ##유저가 삭제될경우 해당된 게시물과 댓글이 같이 삭제됨
+    nickname = models.CharField(max_length=10)
+    password = models.CharField(max_length=12)
     created_at = models.DateTimeField(auto_now_add=True)  ## 작석일
     updated_at = models.DateTimeField(auto_now=True)  ##업데이트일
 
     def __str__(self):
-        return f'{self.author}::{self.content}'
+        return f'{self.post}::{self.nickname}::{self.content}'
 
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'  ##  #comment하면 해당하는 comment화면을 찾아감 

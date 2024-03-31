@@ -12,9 +12,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from .models import Post, Category, Tag, Comment, Menulist
 from .forms import CommentForm
-
+from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
-
+from django.views.decorators.csrf import csrf_exempt
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -190,7 +190,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView):  ##Updateview는 수정하려�
             raise PermissionDenied  ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
 
 
-
+@csrf_exempt
 # Create your views here.
 def new_comment(request, pk):
     if request.user.is_authenticated:  ##로그인했을경우
@@ -201,7 +201,8 @@ def new_comment(request, pk):
             if comment_form.is_valid():
                 comment = comment_form.save(commit=False)
                 comment.post = post
-                comment.author = request.user
+                comment.nickname = request.POST.get('nickname')
+                comment.password = request.POST.get('password')
                 comment.save()
                 return redirect(comment.get_absolute_url())
         return redirect(post.get_absolute_url())
@@ -214,23 +215,23 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
     form_class = CommentForm
 
-    def dispatch(self, request, *args, **kwargs):  ## 유저가 해당포스터를 수정할 권리가 있는지 검사 디스패치는 Get방식인지 Post방식인지 구분해주는 역활을 한다.
-        if request.user.is_authenticated and request.user == self.get_object().author:
-            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
-        else:
-            raise PermissionDenied  ##장고에서 지원하는 기능으b 로 웹코드 200이 안뜨도록 하는 기능임
 
-
+@csrf_exempt
 def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post = comment.post
 
-    if request.user.is_authenticated and request.user == comment.author:
-        comment.delete()
-        return redirect(post.get_absolute_url())
+    if request.method == 'POST':
+        # POST 요청을 받았을 때만 비밀번호를 확인합니다.
+        password = request.POST.get('password', '')  # POST 요청에서 비밀번호를 가져옵니다.
+        if password == comment.password:
+            comment.delete()
+            return redirect(post.get_absolute_url())
+        else:
+            raise PermissionDenied  # 비밀번호가 일치하지 않으면 권한 거부 예외를 발생시킵니다.
     else:
-        raise PermissionDenied  # 해커가 url로 delete_comment.pk를 이용하여 삭제할 수도 있기 때문에 방지하기 위하여 로그인한 사용자의 권한을 확인함
-
+        # POST 요청이 아닌 경우에는 405 Method Not Allowed를 반환합니다.
+        return HttpResponseNotAllowed(['POST'])
 
 class PostSearch(PostList):
     paginate_by = None

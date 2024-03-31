@@ -10,6 +10,29 @@
 {% block main_area %}
 
 <!-- Page content-->
+<script>
+    function formatTimeAgo(timestamp) {
+
+        const formattedTimestamp = timestamp.replace(' a.m.', '').replace(' p.m.', '');
+
+
+        const date = new Date(Date.parse(formattedTimestamp));
+
+        const now = new Date();
+
+        const diff = Math.floor((now - date) / (1000 * 60)); // 차이를 분 단위로 계산
+
+        if (diff < 1) {
+            return '방금 전';
+        } else if (diff < 60) {
+            return `${diff}분 전`;
+        } else if (diff < 1440) {
+            return `${Math.floor(diff / 60)}시간 전`;
+        } else {
+            return `${Math.floor(diff / 1440)}일 전`;
+        }
+    }
+</script>
 
 <div class="container mt-5">
 
@@ -47,11 +70,7 @@
                 <!-- Post Date/Time -->
                 <p> {{post.created_at}} </p>
                 <hr>
-                <!-- Post categories-->
-                <!--  <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a> 조그만 버튼 테그-->
-                <!--  <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a> 조그만 버튼 테그-->
 
-                <!-- Post meta content-->
                 </header>
 
 
@@ -83,7 +102,7 @@
                 </section>
 
                 <!-- 다운로드 버튼 아이콘 설정 -->
-                <!-- Post Download Button -->
+
                 {% if post.file_upload %}
                 <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">
                     Download:
@@ -103,108 +122,65 @@
 
                 {%endif%}
             </div>
-            <!-- Comments Input -->
-            <div id="comment-area">
-                <div class="card my-4">
-                    <h5 class="card-header">
-                        Leave a Comment:
-                    </h5>
-                    <div class="card-body">
-                        {% if user.is_authenticated %}
-                        <!-- 로그인 하였을경우 -->
-                        <form id="comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                {{ comment_form | crispy}}
 
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
 
-                        {% else %}
-                        <a role="button" type="button" class="btn btn-outline-dark btn-block btn-sm" href="#"
-                           data-bs-toggle="modal" data-bs-target="#loginModal">Log in and leave a comment</a>
-                        {% endif %}
+            <hr id="comment-hr">
+
+            {% for comment in post.comment_set.iterator %}
+            <!-- test -->
+            <div class="comment-container">
+                <div class="comment">
+                    <div class="user-info">
+                        <span>{{comment.nickname}}</span> <!-- 유저 이름 -->
                     </div>
+                    <div class="content">
+                        {{comment.content}}
+                    </div>
+                    <div class="timestamp">
+                        <script>
+
+                           document.write(formatTimeAgo('{{ comment.created_at }}'));
+                        </script>
+                    </div>
+                    <a class="delete-link" onclick="showPasswordForm({{comment.pk}})">x</a>
                 </div>
 
 
-                {% if post.comment_set.exists %}
-                <!-- 댓글이 존재하는경우에 -->
-                <div class="card bg-light">
-                    {% for comment in post.comment_set.iterator %}
-                    <!-- Single comment-->
-                    <div class="media mb-4" id="comment-{{comment.pk}}">
+                <!-- 모달 테스트 -->
 
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                                                src="{{comment.get_avatar_url}}"
-                                                                alt="{{comment.author}}" width="60px"></div>
-                                <!-- alt는 src가 실패할경우 실행되는 함수임 -->
-                                <div class="ms-3">
-                                    {% if user.is_authenticated and comment.author == user%}
+                <div class="password-form-container" id="passwordFormContainer-{{comment.pk}}">
+                    <div class="password-form">
+                        <input type="password" id="passwordInput-{{comment.pk}}" class="password-input"
+                               placeholder="비밀번호를 입력하세요" required>
+                        <button type="button" class="confirm-button" onclick="deleteComment({{comment.pk}})">확인
+                        </button>
+                        <button type="button" class="close-button" onclick="showPasswordForm({{comment.pk}})">X
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Test -->
+            {% endfor %}
 
-                                    <div class="float-right">
-                                        <a class="btn btn-sm btn-info " role="button"
-                                           id="comment-{{comment.pk}}-update-btn"
-                                           href="/blog/update_comment/{{comment.pk}}/">edit</a>
 
-                                        <a class="btn btn-sm btn-danger " role="button"
-                                           id="comment-{{comment.pk}}-delete-btn" data-toggle="modal"
-                                           data-target="#deleteCommentModal-{{comment.pk}}"
-                                           href="/blog/update_comment/{{comment.pk}}/">delete</a>
-                                    </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="deleteCommentModal-{{comment.pk}}" tabindex="-1"
-                                         role="doalog" aria-labelledby="deleteCommentModal-{{comment.pk}}-ModalLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteCommentModalLabel={{comment.pk}}">
-                                                        &nbsp Are You Sure?</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <del> {{ comment | linebreaks}}</del>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-info"
-                                                            data-dismiss="modal">Close
-                                                    </button>
+            <hr id="comment-input-hr">
 
-                                                    <a role="button" href="/blog/delete_comment/{{comment.pk}}/"
-                                                       type="button" class="btn btn-danger">Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    <h5 class="mt-0">{{ comment.author.username }} &nbsp;&nbsp;
-                                        <!-- &nbsp; 는 살짝 떨어트려 놓는 기능--> <small class="text-muted">{{comment.created_at}}</small>
-                                    </h5>
-                                    {{ comment.content | linebreaks }}
-                                    <!-- linebreaks 는 댓글에 줄바꿈을 인식하여 글을 줄바꿈으로 바꿔줌 -->
-                                    {% if comment.is_updated %}
-                                    <p class="float-right text-muted"> Updated: {{ comment.updated_at }}</p>
-                                    {% endif %}
+            <!-- 댓글 Input-->
+            <div class="card-body">
+                <form id="comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
+                    <div class="comment-form">
+                        <div class="left">
+                            <input type="text" id="nickname" name="nickname" required>
 
-                                </div>
-                            </div>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="right">
+                            <textarea id="content" name="content" rows="6" required></textarea>
+                            <input type="submit" value="등록" class="comment-submit-btn">
                         </div>
                     </div>
-
-
-                    {% endfor %}
-                </div>
-                {% endif %}
-
+                </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -219,6 +195,35 @@
 <link rel="stylesheet" href="{% static 'blog/css/codebox.css' %}" media="screen">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+<script>
+    function showPasswordForm(commentId) {
+        $('#passwordFormContainer-' + commentId).toggle(); // 토글(toggle) 함수를 사용하여 숨기기/보이기 처리
+    }
+  function deleteComment(commentId) {
+        var passwordInput = document.getElementById("passwordInput-" + commentId).value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/blog/delete_comment/" + commentId + "/");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // 요청이 성공적으로 처리된 경우
+                // 여기에 추가적인 처리를 작성할 수 있습니다.
+                location.reload(); // 페이지 새로고침 등
+            } else {
+                // 요청이 실패한 경우
+                console.error("Request failed. Status: " + xhr.status);
+            }
+        };
+        xhr.onerror = function() {
+            console.error("Request failed. Network error.");
+        };
+        xhr.send("password=" + encodeURIComponent(passwordInput)); // 비밀번호를 요청으로 보냅니다.
+    }
+
+
+
+
+</script>
 
 
 {% endblock %}

@@ -76,11 +76,15 @@ a {
    visibility: hidden;
    transition: opacity 0.2s, visibility 0.2s;
 }
-
+.l-navbar:not(.expander) #extra-content-tag {
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity 0.2s, visibility 0.2s;
+}
 
 /* Expander menu */
 .expander {
-    width: 43%;
+    width: 70%;
     position: fixed;
     top: 0;
     left: 0;
@@ -104,7 +108,11 @@ a {
     visibility: visible;
     transition: opacity 3.5s, visibility 3.5s;
 }
-
+.expander #extra-content-tag {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 3.5s, visibility 3.5s;
+}
 
 /* NAV */
 .nav {
@@ -248,3 +256,4 @@ ion-icon {
     z-index: var(--z-fixed);
 }
 
+\
