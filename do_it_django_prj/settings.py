@@ -180,7 +180,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
-SITE_ID = 5
+SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True ## 이메일 관리를 할것이냐
 ACCOUNT_EMAIL_VERIFICATION = 'none' ## 회원가입을하면 그 이메일을 보내서 회원가입 할것이냐 물어보는것
