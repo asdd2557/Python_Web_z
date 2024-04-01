@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from .models import Post, Category, Tag, Comment, Menulist
 from .forms import CommentForm
+from django.http import HttpResponseBadRequest
 
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
@@ -218,15 +219,20 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
 
 @csrf_exempt
 def delete_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    post = comment.post
+    if request.method == 'POST':
+        password = request.POST.get('password')  # POST 요청의 데이터에서 'password' 필드 값을 가져옴
+        comment = get_object_or_404(Comment, pk=pk)
+        post = comment.post
 
-    if request.password == comment.password:
-        comment.delete()
-        return redirect(post.get_absolute_url())
+        if password == comment.password:
+            comment.delete()
+            return redirect(post.get_absolute_url())
+        else:
+            HttpResponseBadRequest("Password does not match.")  # 콘솔에 메시지 출력
+            raise PermissionDenied
     else:
-        raise PermissionDenied  # 해커가 url로 delete_comment.pk를 이용하여 삭제할 수도 있기 때문에 방지하기 위하여 로그인한 사용자의 권한을 확인함
-
+        # POST 요청이 아닌 경우에 대한 처리 (예: GET 요청 등)
+        return HttpResponseBadRequest("Only POST requests are allowed for this endpoint.")
 
 class PostSearch(PostList):
     paginate_by = None

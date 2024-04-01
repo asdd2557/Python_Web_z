@@ -96,8 +96,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)  ##해당 글이 삭제될경우 연관된 댓글도 같이 삭제됨
 
     content = models.TextField()  ##댓글은 화려하지 않게 텍스트 형식으로만 작성할 수 있게 만들었다.
-    password = models.TextField()
-    nickname = models.TextField()
+    password = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)  ## 작석일
     updated_at = models.DateTimeField(auto_now=True)  ##업데이트일
 
