@@ -14,99 +14,20 @@
     <!-- ToolTip css -->
     <link rel="stylesheet" href="{% static 'blog/css/tooltip.css' %}?v=1" media="screen">
     <!-- table css -->
-    <link rel="stylesheet" href="{% static 'blog/css/table.css' %}?v=1" media="screen">
+    <link rel="stylesheet" href="{% static 'blog/css/table.css' %}?v=1?after" media="screen">
     <!-- upbar css -->
-    <link rel="stylesheet" href="{% static 'blog/css/upbar.css' %}?v=1" media="screen">
-    <!-- bodt css-->
-    <link rel="stylesheet" href="{% static 'blog/css/body.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'blog/css/upbar.css' %}?v=1?after" media="screen">
+    <!-- body css-->
+    <link rel="stylesheet" href="{% static 'blog/css/body.css' %}?v=1?after" media="screen">
 
-
+    <!-- 디테일 화면에서 설정 -->
+    <link rel="stylesheet" href="{% static 'blog/css/detail-comment.css' %}?after">
     <!-- 아이콘 사용시 필요한 Code임 -->
     <script src="https://kit.fontawesome.com/77912c546d.js" crossorigin="anonymous"></script>
 
     <!-- 구글 애드센스 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3694703747477692"
             crossorigin="anonymous"></script>
-    <!-- 디테일 화면에서 설정 -->
-    <link rel="stylesheet" href="{% static 'blog/css/detail-comment.css' %}">
-
-    <style>
-
-.content {
-    margin-left: 20%;
-    position: absolute;
-}
-     #comment-hr {
-    border: none; /* 기본 테두리 제거 */
-    height: 2px; /* 수평선의 높이 */
-    background-color: #000; /* 배경색 설정 */
-    margin: 20px 0; /* 수평선 위아래 여백 설정 */
-
-}
-     #comment-input-hr {
-    border: none; /* 기본 테두리 제거 */
-    height: 2px; /* 수평선의 높이 */
-    background-color: #000; /* 배경색 설정 */
-    margin-top: 20px;
-    margin-bottom: -10px;
-
-}
-
-
-    .comment-container {
-        position: relative; /* 부모 요소의 위치를 상대적으로 설정 */
-        margin: 5px auto;
-    }
-
-    .password-form-container {
-        position: absolute; /* 비밀번호 입력 폼을 절대적으로 설정 */
-        top: 17px;
-        right: 32px; /* 오른쪽 상단에 위치하도록 설정 */
-        z-index: 1000; /* 다른 요소 위에 배치되도록 z-index 설정 */
-        display: none; /* 처음에는 숨겨진 상태로 설정 */
-    }
-
-    .password-form {
-        height: 40px;
-        display: flex;
-        align-items: center;
-        background-color: #ffffff; /* 배경색 설정 */
-        padding: 5px 3px; /* 내부 여백 설정 */
-        border: 1px solid #cccccc; /* 테두리 설정 */
-        border-radius: 5px; /* 모서리를 둥글게 만들기 */
-    }
-
-    .password-input {
-        flex: 1; /* 입력 필드가 가능한 최대 크기로 설정 */
-        margin-right: 1px; /* 비밀번호 입력 필드와 확인 버튼 사이의 간격 설정 */
-    }
-
-    .confirm-button {
-        width: 52px;
-        height: 32px;
-        font-size: 11px;
-        background-color: #dc3545; /* 배경색 설정 */
-        color: #ffffff; /* 텍스트 색상 설정 */
-        border: none; /* 테두리 제거 */
-        padding: 0px 0px; /* 내부 여백 설정 */
-        border-radius: 0px; /* 모서리를 둥글게 만들기 */
-        cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-    }
-      .close-button {
-        width: 52px;
-        height: 32px;
-        font-size: 11px;
-        background-color: #898989/* 배경색 설정 */
-        color: #ffffff; /* 텍스트 색상 설정 */
-        border: none; /* 테두리 제거 */
-        padding: 0px 0px; /* 내부 여백 설정 */
-        border-radius: 0px; /* 모서리를 둥글게 만들기 */
-        cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 상태로 표시 */
-    }
-
-
-
-    </style>
 
 
 </head>
