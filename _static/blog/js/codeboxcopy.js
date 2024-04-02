@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
                  addCopyButton(codeBlock, classes);
                 break;
             }else{
-                 addCopyButton(codeBlock, 'example');
+                   languageClass = classes[i].substring('example');
+                 addCopyButton(codeBlock, classes);
             }
         }
 
