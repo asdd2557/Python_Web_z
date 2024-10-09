@@ -15,7 +15,6 @@
 
         const formattedTimestamp = timestamp.replace(' a.m.', '').replace(' p.m.', '');
 
-
         const date = new Date(Date.parse(formattedTimestamp));
 
         const now = new Date();
@@ -45,64 +44,56 @@
                 {% else %}
                 <span class="badge badge-secondary float-right">미분류</span>
                 {% endif %}
-                <h2 class="card-title">{{p.title}}</h2>
+                <h2 class="card-title">{{ post.title }}</h2>
 
                 <!-- Post title-->
                 <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
                 <!-- Post hook_text-->
-                <h5 class="text-muted">{{post.hook_text}}</h5>
-                <!-- Post RichTextField-->
-                <h5 class="text-muted">{{post.RichTextField}}</h5>
+                <h5 class="text-muted">{{ post.hook_text }}</h5>
+
                 <!-- Post author -->
                 <p class="lead">
                     by
-                    <a href="#" class="text-muted fst-italic mb-2">{{post.author | upper}}</a>
+                    <a href="#" class="text-muted fst-italic mb-2">{{ post.author|upper }}</a>
                 <hr>
                 </p>
 
-
                 {% if user.is_authenticated and user == post.author %}
-                <a class="btn btn -info btn-sm float-right" href="/blog/update_post/{{post.pk}}/" role="button"><i
+                <a class="btn btn-info btn-sm float-right" href="/blog/update_post/{{ post.pk }}/" role="button"><i
                         class="fas fa-pen"> </i>Edit Post</a>
                 {% endif %}
 
-
                 <!-- Post Date/Time -->
-                <p> {{post.created_at}} </p>
+                <p> {{ post.created_at }} </p>
                 <hr>
-
-                </header>
-
 
                 <!-- Preview images figure-->
                 {% if post.head_image %}
-                <figure class="mb-4"><img class="img-fluid rounded" src="{{post.head_image.url}}"
+                <figure class="mb-4"><img class="img-fluid rounded" src="{{ post.head_image.url }}"
                                           alt="{{ post.title }} head_image"/></figure>
-                {%else%}
+                {% else %}
                 <figure class="mb-4"><img class="img-fluid rounded"
-                                          src="https://picsum.photos/seed/{{ post.id }}/800/200" alt="random_image"/>
+                                          src="https://picsum.photos/seed/{{ post.id }}/1200/200" alt="random_image"/>
                 </figure>
-                {%endif%}
+                {% endif %}
                 <!-- Post content-->
                 <section class="mb-5">
+                    <!-- CKEditor로 작성된 내용 출력 -->
+                    <div class="post-content">
+                        {{ post.content|safe }}
+                    </div>
 
-
-                    {{ post.content|safe }}
-
-
-                    <!-- safe는 html 글을 그대로 출력해주는것이 아닌 적용상태로 유저에게 보여주기위한 코드 -->
-
-                    {%if post.tags.exists %}
+                    <!-- 태그 표시 -->
+                    {% if post.tags.exists %}
                     <i class="fas fa-tags"></i>
                     {% for tag in post.tags.iterator %}
-                    <a href="{{ tag.get_absolute_url }}"> <span class="badge badge-dark">{{tag}}</span></a> {% endfor %}
+                    <a href="{{ tag.get_absolute_url }}"> <span class="badge badge-dark">{{ tag }}</span></a> {% endfor %}
                     <br/>
                     <br/>
                     {% endif %}
                 </section>
 
                 <!-- 다운로드 버튼 아이콘 설정 -->
-
                 {% if post.file_upload %}
                 <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">
                     Download:
@@ -112,65 +103,59 @@
                     {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
                     <i class="fas fa-file-excel"></i>
 
-                    {%elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                    {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
                     <i class="fas fa-file-word"></i>
-                    {else}
+                    {% else %}
                     <i class="far fa-file"></i>
-                    {%endif%}
+                    {% endif %}
                     {{ post.get_file_name }}
                 </a><br><br>
 
-                {%endif%}
+                {% endif %}
             </div>
-
 
             <hr id="comment-hr">
 
             {% for comment in post.comment_set.iterator %}
-            <!-- test -->
+            <!-- 댓글 영역 -->
             <div class="comment-container">
                 <div class="comment">
                     <div class="user-info">
-                        <span>{{comment.nickname}}</span> <!-- 유저 이름 -->
+                        <span>{{ comment.nickname }}</span> <!-- 유저 이름 -->
                     </div>
                     <div class="content">
-                        {{comment.content}}
+                        {{ comment.content }}
                     </div>
                     <div class="timestamp">
                         <script>
-                           document.write(formatTimeAgo('{{ comment.created_at }}'));
+                            document.write(formatTimeAgo('{{ comment.created_at }}'));
                         </script>
                     </div>
-                    <a class="delete-link" onclick="showPasswordForm({{comment.pk}})">x</a>
+                    <a class="delete-link" onclick="showPasswordForm({{ comment.pk }})">x</a>
                 </div>
 
-
-                <!-- 모달 테스트 -->
-
-                <div class="password-form-container" id="passwordFormContainer-{{comment.pk}}">
+                <!-- 비밀번호 확인 폼 -->
+                <div class="password-form-container" id="passwordFormContainer-{{ comment.pk }}">
                     <div class="password-form">
-                        <input type="password" id="passwordInput-{{comment.pk}}" class="password-input"
+                        <input type="password" id="passwordInput-{{ comment.pk }}" class="password-input"
                                placeholder="비밀번호를 입력하세요" required>
-                        <button type="button" class="confirm-button" onclick="deleteComment({{comment.pk}})">확인
+                        <button type="button" class="confirm-button" onclick="deleteComment({{ comment.pk }})">확인
                         </button>
-                        <button type="button" class="close-button" onclick="showPasswordForm({{comment.pk}})">X
+                        <button type="button" class="close-button" onclick="showPasswordForm({{ comment.pk }})">X
                         </button>
                     </div>
                 </div>
             </div>
-            <!-- Modal Test -->
             {% endfor %}
-
 
             <hr id="comment-input-hr">
 
-            <!-- 댓글 Input-->
+            <!-- 댓글 입력 폼 -->
             <div class="card-body">
-                <form id="comment-form" method="POST" action="{{post.get_absolute_url}}new_comment/">
+                <form id="comment-form" method="POST" action="{{ post.get_absolute_url }}new_comment/">
                     <div class="comment-form">
                         <div class="left">
                             <input type="text" id="nickname" name="nickname" required>
-
                             <input type="password" id="password" name="password" required>
                         </div>
                         <div class="right">
@@ -184,46 +169,33 @@
     </div>
 </div>
 
-
-<!--Tooltip 스크립트 -->
+<!-- 스크립트 및 스타일 -->
 <script src="{% static 'blog/js/tooltip.js' %}"></script>
-
-<!--코드 박스 카피 버튼 스크립트 -->
 <script src="{% static 'blog/js/codeboxcopy.js' %}"></script>
-<!--코드 박스 사용하기 위한 스크립트-->
 <link rel="stylesheet" href="{% static 'blog/css/codebox.css' %}" media="screen">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
     function showPasswordForm(commentId) {
-        $('#passwordFormContainer-' + commentId).toggle(); // 토글(toggle) 함수를 사용하여 숨기기/보이기 처리
+        $('#passwordFormContainer-' + commentId).toggle();
     }
-function deleteComment(commentId) {
-    var passwordInput = document.getElementById("passwordInput-" + commentId).value;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/blog/delete_comment/" + commentId + "/");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            // 요청이 성공적으로 처리된 경우
-            // 여기에 추가적인 처리를 작성할 수 있습니다.
-            location.reload(); // 페이지 새로고침 등
-        } else {
-            // 요청이 실패한 경우
-            console.error("Request failed. Status: " + xhr.status);
-        }
-    };
-    xhr.onerror = function() {
-        console.error("Request failed. Network error.");
-    };
-    xhr.send("password=" + encodeURIComponent(passwordInput)); // 비밀번호를 요청으로 보냅니다.
-}
-
-
-
-
+    function deleteComment(commentId) {
+        var passwordInput = document.getElementById("passwordInput-" + commentId).value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/blog/delete_comment/" + commentId + "/");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                location.reload();
+            } else {
+                console.error("Request failed. Status: " + xhr.status);
+            }
+        };
+        xhr.onerror = function() {
+            console.error("Request failed. Network error.");
+        };
+        xhr.send("password=" + encodeURIComponent(passwordInput));
+    }
 </script>
 
-
 {% endblock %}
-
