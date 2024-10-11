@@ -121,6 +121,10 @@ code.hljs {
 .hljs-meta {
     color: #17a2b8;
 }
+.hljs-keyword {
+    color: burlywood;
+}
+
 
 .hljs-meta .hljs-string {
   color: #38a;
