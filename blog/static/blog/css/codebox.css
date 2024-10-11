@@ -59,7 +59,6 @@ code.hljs {
   color: #8bc34a;
 }
 
-
 .hljs-keyword,
 .hljs-attribute,
 .hljs-selector-tag,
@@ -68,9 +67,8 @@ code.hljs {
 .hljs-doctag,
 .hljs-name {
   font-weight: bold;
-    color: cadetblue;
+    color: darkorange; /* 색상을 darkorange로 변경 */
 }
-
 
 /* User color: hue: 0 */
 
@@ -115,21 +113,18 @@ code.hljs {
   color: #397300;
 }
 
-
 /* Meta color: hue: 200 */
 
 .hljs-meta {
     color: #17a2b8;
 }
 .hljs-keyword {
-    color: burlywood;
+    color: darkorange; /* 이 부분도 변경 */
 }
-
 
 .hljs-meta .hljs-string {
   color: #38a;
 }
-
 
 /* Misc effects */
 
@@ -140,7 +135,6 @@ code.hljs {
 .hljs-strong {
   font-weight: bold;
 }
-
 
 /* code box 에 카피버튼 */
 .copy-container {
@@ -154,7 +148,7 @@ code.hljs {
      border-top-right-radius: 7px;
      border-bottom-left-radius: 0px;
      border-bottom-right-radius: 0px;
-    }
+}
 .copy-button {
         position: absolute;
         top: 2px;
@@ -170,8 +164,7 @@ code.hljs {
         background-color: #413f3f;
         font-family: inherit;
         font-size: 90%;
-
-    }
+}
 .copy-container-name {
         position: relative;
         top: 5px;
@@ -182,5 +175,4 @@ code.hljs {
         border-top-left-radius: 18px;
         font-family: inherit;
         font-size: 90%;
-
-    }
+}
